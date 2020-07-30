@@ -1,0 +1,4 @@
+@p 1
+Bulbasaur 
+Grass Poison 
+45 49 49 65 65 45
