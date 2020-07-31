@@ -4,7 +4,7 @@
 namespace pkmn
 {
 	//Pokemon Types
-	enum class Type
+	enum Type
 	{
 		NORMAL, FIRE, WATER, GRASS, ELECTRIC, ICE,
 		FIGHTING, POISON, GROUND, FLYING, PSYCHIC, BUG,
@@ -18,6 +18,7 @@ namespace pkmn
 	};
 
 	const int NUM_TYPES = 18;
+	const int NUM_STATS = 6;
 
 	//The first dimension represents the attacking type
 	//The second dimension represents the defending type
