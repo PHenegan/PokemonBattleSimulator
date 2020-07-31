@@ -52,8 +52,6 @@ void Pokemon::fillSpecies(ifstream &file)
 		{
 			found = true;
 			getline(file, m_name);
-			cout << "Found " << m_name << endl;
-
 
 			//processes type line
 			getline(file, temp); 
@@ -73,11 +71,11 @@ void Pokemon::fillSpecies(ifstream &file)
 
 void Pokemon::fillTypes(string s)
 {
+	istringstream line(s);
 	vector<string> types;
 	string temp;
 	int count = 0;
-
-	istringstream line(s);
+	
 	while (!line.eof())
 	{
 		line >> temp;

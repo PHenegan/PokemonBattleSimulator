@@ -10,6 +10,7 @@ int main()
 {
 	ifstream types("type_modifiers.txt");
 	ifstream pokeList("pokemon_list.txt");
+
 	setTypeModifiers(types);
 
 	Pokemon p1(1);
@@ -29,3 +30,4 @@ void pkmn::setTypeModifiers(ifstream& file)
 		for (int col = 0; col < NUM_TYPES && !file.eof(); col++)
 			file >> typeModifiers[row][col];
 }
+
