@@ -91,7 +91,7 @@ void Pokemon::fillTypes(string s)
 				m_types.push_back(static_cast<pkmn::Type>(i));
 				count++;
 			}
-	if (count == 0)
+	if (count == 0 || count > MAX_TYPES)
 	{
 		//Structured Exception Handling here
 	}

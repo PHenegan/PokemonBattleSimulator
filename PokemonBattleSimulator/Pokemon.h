@@ -19,6 +19,8 @@ private:
 	void fillTypes(std::string s);
 	void fillStats(std::string s);
 public:
+	const int MAX_TYPES = 2;
+
 	Pokemon(int dexNum);
 
 	int getDexNum() const;
