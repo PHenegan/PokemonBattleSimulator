@@ -125,9 +125,8 @@ void Pokemon::fillStats(string s)
 string Pokemon::display() const
 {
 	ostringstream out;
-	
 	//prints out name, typing, and HP
-	out << m_name << " [";
+	out << "Lvl. " << m_level << " " << m_name << " [";
 	for (int i = 0; i < m_types.size(); i++)
 	{
 		out << pkmn::TYPE_NAMES[m_types[i]];
