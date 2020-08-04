@@ -4,10 +4,21 @@
 
 using namespace std;
 
+Pokemon::Pokemon() : m_name(""), m_currHP(0), m_level(0), m_dexNum(0), m_stats()
+{
+	for (int i = 0; i < 6; i++)
+		m_stats[i] = 0;
+}
+
 Pokemon::Pokemon(int dexNum) : m_name(""), m_currHP(0), m_level(0), m_dexNum(dexNum), m_stats()
 {
 	for (int i = 0; i < 6; i++)
 		m_stats[i] = 0;
+}
+
+void Pokemon::setDexNum(int dexNum)
+{
+	this->m_dexNum = dexNum;
 }
 
 int Pokemon::getDexNum() const

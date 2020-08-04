@@ -21,7 +21,10 @@ private:
 	void fillStats(std::string s);
 
 public:
+	Pokemon();
 	Pokemon(int dexNum);
+
+	void setDexNum(int dexNum);
 
 	int getDexNum() const;
 	std::string getName() const;
