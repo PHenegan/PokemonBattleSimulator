@@ -23,24 +23,34 @@ void Battlefield::runTurn()
 {
 	//There will only ever be two pokemon on the field at one point
 	const int NUM_POKE = 2;
-	Pokemon* pokemon[] = { m_tr1->getCurrentPokemon(), m_tr2->getCurrentPokemon() };
 	
+	display();
+
+	Pokemon* pokemon[] = { m_tr1->getCurrentPokemon(), m_tr2->getCurrentPokemon() };
+
+	m_tr1->getMoveChoice();
+	m_tr2->getMoveChoice();
+
 	//sorts the move priority
 	sortPriority(pokemon, NUM_POKE);
+
+
 
 	m_turn++;
 }
 
 void Battlefield::display() const
 {
-	cout << m_tr2->getCurrentPokemon()->display();
+	m_tr2->getCurrentPokemon()->display();
 	cout << "\n\n\n\n";
-	cout << m_tr1->getCurrentPokemon()->display();
+	m_tr1->getCurrentPokemon()->display();
 }
 
 void Battlefield::sortPriority(Pokemon** list, int size)
 {
 	//Sorts the list based on priority or how fast the Pokemon is
+	//This is mostly future-proofing because right now it's only comparing two pokemon
+	//If I ever add a "Doubles" mode, 4 pokemon would be on at a time, and this would be more useful
 	for (int sorted = 0; sorted < size; sorted++)
 		for (int unsorted = sorted + 1; unsorted < size; unsorted++)
 		{

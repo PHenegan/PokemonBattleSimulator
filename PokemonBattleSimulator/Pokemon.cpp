@@ -38,6 +38,11 @@ int Pokemon::getStat(pkmn::Stat s) const
 	return m_stats[s];
 }
 
+int Pokemon::currentHP() const
+{
+	return m_currHP;
+}
+
 Move* Pokemon::getCurrMove() const
 {
 	return m_currMove;
@@ -53,12 +58,17 @@ void Pokemon::setCurrMove(int index)
 }
 
 //returns the move at the specified index in the move list
-Move Pokemon::getMove(int index)
+Move Pokemon::getMove(int index) const
 {
 	if (index > m_moves.size() || index < 0)
 		throw("getMove() Error: specified index does not exist");
 
 	return m_moves[index];
+}
+
+int Pokemon::getNumMoves() const
+{
+	return m_moves.size();
 }
 
 
@@ -149,21 +159,27 @@ void Pokemon::fillStats(string s)
 	m_currHP = m_stats[pkmn::HP];
 }
 
-//returns a string formatted with the object's name, type(s), and HP
-string Pokemon::display() const
+//returns a string formatted with the object's level, name, type(s), and HP
+void Pokemon::display() const
 {
-	ostringstream out;
-	//prints out name, typing, and HP
-	out << "Lvl. " << m_level << " " << m_name << " [";
+	//prints out level, name, typing, and HP
+	cout << "Lvl. " << m_level << " " << m_name << " [";
 	for (int i = 0; i < m_types.size(); i++)
 	{
-		out << pkmn::TYPE_NAMES[m_types[i]];
+		cout << pkmn::TYPE_NAMES[m_types[i]];
 		if (i != m_types.size() - 1)
-			out << "-";
+			cout << "-";
 	}
-	out << "] (" << m_currHP << "/" << m_stats[pkmn::HP] << " HP)";
+	cout << "] (" << m_currHP << "/" << m_stats[pkmn::HP] << " HP)";
 
-	return out.str();
+	cout << endl;
+}
+
+void Pokemon::displayMoves() const
+{
+	for (int i = 0; i < m_moves.size(); i++)
+		cout << "[" << i + 1 << "]" << " : " << m_moves[i].m_name
+			<< " (" << m_moves[i].m_usesLeft << "/" << m_moves[i].m_maxUses << " PP)" << endl;
 }
 
 bool Pokemon::operator > (const Pokemon& p) const

@@ -15,6 +15,7 @@ public:
 
 	Party getParty() const;
 	Pokemon* getCurrentPokemon() const;
+	void getMoveChoice();
 	bool canFight() const;
 
 	int getReward() const;

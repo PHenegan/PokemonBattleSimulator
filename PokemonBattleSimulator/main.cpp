@@ -16,7 +16,7 @@ int main()
 	Pokemon p1(1);
 	p1.fillSpecies(pokeList);
 
-	cout << p1.display();
+	p1.display();
 }
 
 //reads type modifiers from a file and checks that the final array is valid

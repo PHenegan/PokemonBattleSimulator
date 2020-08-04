@@ -1,4 +1,5 @@
 #include "Trainer.h"
+#include <iostream>
 
 using namespace std;
 
@@ -22,6 +23,23 @@ Party Trainer::getParty() const
 Pokemon* Trainer::getCurrentPokemon() const
 {
 	return &m_party[0];
+}
+
+void Trainer::getMoveChoice()
+{
+	int choice;
+	do 
+	{
+		cout << "Pick a move: "; cin >> choice;
+		cin.ignore();
+
+		if (choice < 1 || choice > getCurrentPokemon()->getNumMoves())
+			cout << "Invalid choice. Please pick one of the above options." << endl;
+
+	} while (choice < 1 || choice > getCurrentPokemon()->getNumMoves());
+
+	
+
 }
 
 //returns whether or not the trainer has Pokemon that can still battle
