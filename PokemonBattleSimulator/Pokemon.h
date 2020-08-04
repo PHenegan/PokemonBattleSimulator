@@ -33,7 +33,7 @@ public:
 	int getStat(pkmn::Stat s) const;
 	
 	Move* getCurrMove() const;
-	void setCurrMove(Move* m);
+	void setCurrMove(int index);
 
 	Move getMove(int index);
 
