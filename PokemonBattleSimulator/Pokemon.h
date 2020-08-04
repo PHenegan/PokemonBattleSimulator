@@ -10,6 +10,8 @@ class Pokemon
 private:
 	std::vector<pkmn::Type> m_types;
 	std::vector<Move> m_moves;
+	Move* m_currMove;
+
 	int m_stats[pkmn::NUM_STATS];
 	int m_currHP;
 	int m_level;
@@ -28,8 +30,12 @@ public:
 
 	int getDexNum() const;
 	std::string getName() const;
-	
 	int getStat(pkmn::Stat s) const;
+	
+	Move* getCurrMove() const;
+	void setCurrMove(Move* m);
+
+	Move getMove(int index);
 
 	double calculateDamageMod(pkmn::Type t) const;
 	void fillSpecies(std::ifstream& file);

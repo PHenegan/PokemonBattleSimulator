@@ -6,13 +6,13 @@ using namespace std;
 
 Pokemon::Pokemon() : m_name(""), m_currHP(0), m_level(0), m_dexNum(0), m_stats()
 {
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < pkmn::NUM_STATS; i++)
 		m_stats[i] = 0;
 }
 
 Pokemon::Pokemon(int dexNum) : m_name(""), m_currHP(0), m_level(0), m_dexNum(dexNum), m_stats()
 {
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < pkmn::NUM_STATS; i++)
 		m_stats[i] = 0;
 }
 
@@ -36,6 +36,29 @@ string Pokemon::getName() const
 int Pokemon::getStat(pkmn::Stat s) const
 {
 	return m_stats[s];
+}
+
+Move* Pokemon::getCurrMove() const
+{
+	return m_currMove;
+}
+
+//Sets the current move to the move at the specified index in the move list
+void Pokemon::setCurrMove(int index)
+{
+	if (index > m_moves.size() || index < 0)
+		throw("setCurrMove() Error: specified index does not exist");
+	
+	m_currMove = &m_moves[index];
+}
+
+//returns the move at the specified index in the move list
+Move Pokemon::getMove(int index)
+{
+	if (index > m_moves.size() || index < 0)
+		throw("getMove() Error: specified index does not exist");
+
+	return m_moves[index];
 }
 
 
@@ -63,8 +86,7 @@ void Pokemon::fillSpecies(ifstream &file)
 		//If the target pokemon is found, adds species data into object
 		if (temp.length() >= 4 && 
 			temp.substr(0, 2) == "@p" &&
-			temp.substr(3) == to_string(m_dexNum)
-			)
+			temp.substr(3) == to_string(m_dexNum))
 		{
 			found = true;
 			getline(file, m_name);
