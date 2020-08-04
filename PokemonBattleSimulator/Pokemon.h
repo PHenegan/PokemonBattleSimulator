@@ -1,6 +1,7 @@
 #pragma once
 
 #include "type.h";
+#include "Move.h";
 #include <fstream>
 #include <vector>
 
@@ -8,7 +9,7 @@ class Pokemon
 {
 private:
 	std::vector<pkmn::Type> m_types;
-	//std::vector<Move> m_moves;
+	std::vector<Move> m_moves;
 	int m_stats[pkmn::NUM_STATS];
 	int m_currHP;
 	int m_level;
@@ -18,9 +19,8 @@ private:
 
 	void fillTypes(std::string s);
 	void fillStats(std::string s);
-public:
-	const int MAX_TYPES = 2;
 
+public:
 	Pokemon(int dexNum);
 
 	int getDexNum() const;
@@ -34,5 +34,7 @@ public:
 	void fillSpecies(std::ifstream& file);
 	//void addMove(move m)
 	//void delMove(move m)
+
+	std::string display() const;
 };
 

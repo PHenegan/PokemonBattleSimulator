@@ -16,9 +16,26 @@ namespace pkmn
 		"Fighting", "Poison", "Ground", "Flying", "Psychic", "Bug",
 		"Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy"
 	};
-
 	const int NUM_TYPES = 18;
+	
+	//Pokemon Statistics
+	enum Stats 
+	{ 
+		HP, ATK, SPATK, 
+		DEF, SPDEF, SPEED
+	};
+	const std::string STAT_NAMES[] = 
+	{
+		"HP", "Attack", "Special Attack", 
+		"Defense", "Special Defense", "Speed"
+	};
+
 	const int NUM_STATS = 6;
+
+	//Maximum values
+	const int MAX_TYPES = 2;
+	const int MAX_MOVES = 4;
+	const int MAX_PARTY = 6;
 
 	//The first dimension represents the attacking type
 	//The second dimension represents the defending type

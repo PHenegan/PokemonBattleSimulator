@@ -35,7 +35,6 @@ double Pokemon::calculateDamageMod(pkmn::Type t) const
 void Pokemon::fillSpecies(ifstream &file)
 {
 	string name;
-	int stats[6];
 	string temp;
 	bool found = false;
 
@@ -89,7 +88,7 @@ void Pokemon::fillTypes(string s)
 				m_types.push_back(static_cast<pkmn::Type>(i));
 				count++;
 			}
-	if (count == 0 || count > MAX_TYPES)
+	if (count == 0 || count > pkmn::MAX_TYPES)
 	{
 		//Structured Exception Handling here
 	}
@@ -104,9 +103,27 @@ void Pokemon::fillStats(string s)
 	{
 		line >> m_stats[i++];
 	}
-	if (i < 6)
+	if (i < pkmn::NUM_STATS)
 	{
 		//structured exception handling here
 	}
+	m_currHP = m_stats[pkmn::HP];
 }
 
+//returns a string formatted with the object's name, type(s), and HP
+string Pokemon::display() const
+{
+	ostringstream out;
+	
+	//prints out name, typing, and HP
+	out << m_name << " [";
+	for (int i = 0; i < m_types.size(); i++)
+	{
+		out << pkmn::TYPE_NAMES[m_types[i]];
+		if (i != m_types.size() - 1)
+			out << "-";
+	}
+	out << "] (" << m_currHP << "/" << m_stats[pkmn::HP] << " HP)";
+
+	return out.str();
+}
