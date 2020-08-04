@@ -19,7 +19,7 @@ namespace pkmn
 	const int NUM_TYPES = 18;
 	
 	//Pokemon Statistics
-	enum Stats 
+	enum Stat 
 	{ 
 		HP, ATK, SPATK, 
 		DEF, SPDEF, SPEED
