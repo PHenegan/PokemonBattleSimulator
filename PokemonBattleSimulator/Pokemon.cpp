@@ -4,13 +4,13 @@
 
 using namespace std;
 
-Pokemon::Pokemon() : m_name(""), m_currHP(0), m_level(0), m_dexNum(0), m_stats()
+Pokemon::Pokemon() : m_name(""), m_currHP(0), m_level(0), m_dexNum(0), m_stats(), m_currMove(nullptr)
 {
 	for (int i = 0; i < pkmn::NUM_STATS; i++)
 		m_stats[i] = 0;
 }
 
-Pokemon::Pokemon(int dexNum) : m_name(""), m_currHP(0), m_level(0), m_dexNum(dexNum), m_stats()
+Pokemon::Pokemon(int dexNum) : m_name(""), m_currHP(0), m_level(0), m_dexNum(dexNum), m_stats(), m_currMove(nullptr)
 {
 	for (int i = 0; i < pkmn::NUM_STATS; i++)
 		m_stats[i] = 0;
@@ -180,3 +180,4 @@ bool Pokemon::operator == (const Pokemon& p) const
 {
 	return !(*this > p || *this < p);
 }
+
