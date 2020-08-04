@@ -29,6 +29,7 @@ public:
 	int getDexNum() const;
 	std::string getName() const;
 	
+	int currentHP() const;
 	int getAtk(bool isSpecial) const;
 	int getDef(bool isSpecial) const;
 	int getSpeed();

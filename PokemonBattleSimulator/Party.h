@@ -18,7 +18,7 @@ public:
 	void switchMembers(int index1, int index2);
 	
 	Pokemon at(int index) const;
-	int getSize() const;
+	int size() const;
 
 	Pokemon operator [] (int index) const;
 };

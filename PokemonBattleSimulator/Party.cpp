@@ -30,7 +30,7 @@ Party::Party(std::initializer_list<Pokemon> list)
 //copy constructor
 Party::Party(const Party& p)
 {
-	this->m_size = p.getSize();
+	this->m_size = p.size();
 	for (int i = 0; i < m_size; i++)
 	{
 		m_partyArray[i] = p[i];
@@ -82,7 +82,7 @@ Pokemon Party::at(int index) const
 	return m_partyArray[index];
 }
 
-int Party::getSize() const
+int Party::size() const
 {
 	return m_size;
 }
