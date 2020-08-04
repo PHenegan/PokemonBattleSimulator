@@ -75,3 +75,8 @@ void Battlefield::sortPriority(Pokemon** list, int size)
 
 		}
 }
+
+void useMove(Pokemon* user, Pokemon* target)
+{
+	
+}

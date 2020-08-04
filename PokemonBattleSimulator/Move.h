@@ -2,6 +2,8 @@
 #include "type.h"
 #include <string>
 
+class Pokemon;
+
 class Move
 {
 public:
@@ -16,13 +18,26 @@ public:
 	int m_priority;
 	int m_damage;
 	int m_accuracy;
-	int m_maxUses;
-	int m_usesLeft;
+
+	//Max power points - how many times the move can be used
+	int m_maxPP;
+	int m_PP;
+	int statChanges[pkmn::NUM_STATS];
 	bool m_isSpecial;
 
 	Move();
-	Move(std::string name, pkmn::Type t, int damage, int accuracy=100, int priority = 0, bool isSpecial = false);
+	Move(std::string name);
 
+	void setName(std::string name);
+	void setDamage(int n);
+	void setAccuracy(int n);
+	void setType(pkmn::Type t);
+	void setDamage(int n);
+	void setMaxPP(int n);
+	void setSpecial(bool isSp);
+	void setPriority(int n);
 
+	void heal();
+	void use(Pokemon* target);
 };
 

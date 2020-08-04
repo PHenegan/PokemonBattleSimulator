@@ -3,10 +3,16 @@
 
 using namespace std;
 //default constructor
-Move::Move() : m_damage(0), m_accuracy(0), m_isSpecial(false), m_name(""), m_type(pkmn::NORMAL), m_priority(0), m_maxUses(0), m_usesLeft(0)
+Move::Move()
 {
-	
-
+	m_name = "";
+	m_damage = 0;
+	m_accuracy = 0;
+	m_isSpecial = false;
+	m_type = pkmn::NORMAL;
+	m_priority = 0;
+	m_maxUses = 0;
+	m_usesLeft = m_maxUses;
 }
 
 //Initializes with given values

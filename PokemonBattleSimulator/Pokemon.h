@@ -7,6 +7,8 @@
 
 class Pokemon
 {
+
+	friend class Battlefield;
 private:
 	std::vector<pkmn::Type> m_types;
 	std::vector<Move> m_moves;
@@ -15,6 +17,11 @@ private:
 	int m_stats[pkmn::NUM_STATS];
 	int m_currHP;
 	int m_level;
+
+	//A pokemon's stats can be changed in-battle by moves
+	//Each stat has a max of +6 or -6
+	int m_statModifiers[pkmn::NUM_STATS];
+
 
 	std::string m_name;
 	int m_dexNum;
