@@ -33,6 +33,12 @@ string Pokemon::getName() const
 
 //getStats
 
+int Pokemon::getStat(pkmn::Stat s) const
+{
+	return m_stats[s];
+}
+
+
 //calculates the damage modifier a type has on this pokemon. Stacks for each type
 double Pokemon::calculateDamageMod(pkmn::Type t) const
 {
@@ -136,4 +142,19 @@ string Pokemon::display() const
 	out << "] (" << m_currHP << "/" << m_stats[pkmn::HP] << " HP)";
 
 	return out.str();
+}
+
+bool Pokemon::operator > (const Pokemon& p) const
+{
+	return m_stats[pkmn::SPEED] > p.getStat(pkmn::SPEED);
+}
+
+bool Pokemon::operator < (const Pokemon& p) const
+{
+	return p > *this;
+}
+
+bool Pokemon::operator == (const Pokemon& p) const
+{
+	return !(*this > p || *this < p);
 }

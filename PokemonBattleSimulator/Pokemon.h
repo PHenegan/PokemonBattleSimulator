@@ -29,10 +29,7 @@ public:
 	int getDexNum() const;
 	std::string getName() const;
 	
-	int currentHP() const;
-	int getAtk(bool isSpecial) const;
-	int getDef(bool isSpecial) const;
-	int getSpeed();
+	int getStat(pkmn::Stat s) const;
 
 	double calculateDamageMod(pkmn::Type t) const;
 	void fillSpecies(std::ifstream& file);
@@ -40,5 +37,9 @@ public:
 	//void delMove(move m)
 
 	std::string display() const;
+
+	bool operator > (const Pokemon &p) const;
+	bool operator < (const Pokemon &p) const;
+	bool operator == (const Pokemon &p) const;
 };
 
