@@ -1,5 +1,4 @@
 #pragma once
-#include "Pokemon.h"
 #include "Party.h"
 #include <string>
 
