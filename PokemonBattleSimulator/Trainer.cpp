@@ -111,4 +111,5 @@ void Trainer::addMoney(int howMuch)
 ostream& operator << (ostream& stream, const Trainer& t)
 {
 	stream << t.getName();
+	return stream;
 }

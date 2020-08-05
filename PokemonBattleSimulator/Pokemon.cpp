@@ -27,6 +27,36 @@ Pokemon::Pokemon(int dexNum) : m_name(""), m_currHP(0), m_level(0), m_dexNum(dex
 	}
 }
 
+Pokemon::Pokemon(const Pokemon& p)
+{
+	this->m_name = p.m_name;
+	this->m_dexNum = p.m_dexNum;
+	this->m_currHP = p.m_currHP;
+	this->m_level = p.m_level;
+	this->m_currMove = nullptr;
+
+	for (Move m : p.m_moves)
+	{
+		m_moves.push_back(m);
+		if (m == *p.getCurrMove())
+			this->m_currMove = &m_moves.back();
+	}
+
+	for (pkmn::Type t : p.m_types)
+	{
+		this->m_types.push_back(t);
+	}
+
+	for (int i = 0; i < pkmn::NUM_STATS; i++)
+	{
+		this->m_stats[i] = p.m_stats[i];
+		this->m_statModifiers[i] = p.m_statModifiers[i];
+		this->m_IV[i] = p.m_IV[i];
+		this->m_EV[i] = p.m_EV[i];
+	}
+	
+}
+
 void Pokemon::setDexNum(int dexNum)
 {
 	this->m_dexNum = dexNum;
@@ -68,9 +98,13 @@ void Pokemon::setEV(pkmn::Stat s, int value)
 	m_EV[s] = value;
 }
 
-void Pokemon::setLevel(int n)
+void Pokemon::setLevel(int level)
 {
-	m_level = n;
+	if (level > 100)
+		level = 100;
+	else if (level < 0)
+		level = 0;
+	this->m_level = level;
 }
 
 int Pokemon::getDexNum() const
@@ -147,7 +181,7 @@ void Pokemon::addHP(int howMuch)
 
 void Pokemon::subHP(int howMuch)
 {
-	m_currHP += howMuch;
+	m_currHP -= howMuch;
 
 	if (m_currHP < 0)
 		m_currHP = 0;
@@ -212,6 +246,9 @@ double Pokemon::calculateDamageMod(pkmn::Type t) const
 
 void Pokemon::fillSpecies(ifstream &file)
 {
+	file.clear();
+	file.seekg(0);
+
 	string name;
 	string temp;
 	bool found = false;
@@ -241,7 +278,8 @@ void Pokemon::fillSpecies(ifstream &file)
 	}
 	if (!found)
 	{
-		//structured exception handling
+		string error = "Error: Pokemon " + to_string(getDexNum()) + " was not found";
+		throw(error.c_str());
 	}
 }
 
@@ -273,18 +311,29 @@ void Pokemon::fillTypes(string s)
 
 void Pokemon::fillStats(string s)
 {
-	int i = 0;
+	pkmn::Stat i = pkmn::HP;
+	int statVal;
 	istringstream line(s);
 	
-	while (i < pkmn::NUM_STATS && !line.eof())
+	while (i <= pkmn::SPEED && !line.eof())
 	{
-		line >> m_stats[i++];
+		line >> statVal;
+		setStat(i, statVal);
+
+		i = static_cast<pkmn::Stat>(i + 1);
 	}
 	if (i < pkmn::NUM_STATS)
 	{
-		//structured exception handling here
+		string error = "Error: Pokemon " + getName() + " did not receive enough stat values.";
+		throw(error.c_str());
 	}
 	m_currHP = m_stats[pkmn::HP];
+}
+
+void Pokemon::addMove(Move m)
+{
+	if (static_cast<int>(m_moves.size()) < pkmn::MAX_MOVES)
+		m_moves.push_back(m);
 }
 
 //returns a string formatted with the object's level, name, type(s), and HP

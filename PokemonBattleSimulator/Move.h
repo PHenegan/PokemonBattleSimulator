@@ -55,6 +55,8 @@ public:
 	bool use(Pokemon* user, Pokemon* target);
 
 	std::string display() const;
+	
+	bool operator == (const Move& m) const;
 };
 
 std::ostream& operator << (std::ostream& stream, const Move& m);

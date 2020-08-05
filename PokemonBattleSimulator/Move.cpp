@@ -2,6 +2,7 @@
 #include "Pokemon.h"
 #include <cstdlib>
 #include <sstream>
+#include <iostream>
 
 using namespace std;
 //default constructor
@@ -150,7 +151,6 @@ bool Move::use(Pokemon* user, Pokemon* target)
 	pkmn::Stat atk = m_isSpecial ? pkmn::SPATK : pkmn::SPDEF;
 	
 	double damage = 0;
-
 	//This is based on the formular for damage calculations used in pokemon games.
 	//I tried to break it up into several lines in order to make it more readable
 	if (m_power > 0 && !miss)
@@ -159,7 +159,7 @@ bool Move::use(Pokemon* user, Pokemon* target)
 		double stab = user->hasType(m_type) ? 1.5 : 1.0;
 
 		//Attacks will do between 85% and 100% of their potential damage based on random rolls
-		double dRoll = (static_cast<int>(rand() % 16) + 85) / 100.0;
+		double dRoll = static_cast<double>(rand() % 16 + 85) / 100;
 
 		//modifier based on how effective the type is on the target
 		double typeMod = target->calculateDamageMod(m_type);
@@ -195,6 +195,12 @@ string Move::display() const
 
 	formatted << fName << " (" << m_PP << "/ " << m_maxPP << " PP)";
 	return formatted.str();
+}
+
+//the only unique value in a move is its name, so that is the only thing needed to compare moves
+bool Move::operator == (const Move& m) const
+{
+	return m.m_name == this->m_name;
 }
 
 ostream& operator << (std::ostream& stream, const Move& m)

@@ -13,16 +13,20 @@ private:
 	std::vector<Move> m_moves;
 	Move* m_currMove;
 
+	//A pokemon's stats can be changed in-battle by moves
+	//Each stat has a max of +6 or -6
+	int m_statModifiers[pkmn::NUM_STATS];
 	int m_stats[pkmn::NUM_STATS];
+	
+	//EVs (effort values) and IVs (individual values) are both extra values added to increase stat
+	//spread between pokemon of similar species. 
 	int m_EV[pkmn::NUM_STATS];
 	int m_IV[pkmn::NUM_STATS];
 
 	int m_currHP;
 	int m_level;
 
-	//A pokemon's stats can be changed in-battle by moves
-	//Each stat has a max of +6 or -6
-	int m_statModifiers[pkmn::NUM_STATS];
+
 
 
 	std::string m_name;
@@ -72,8 +76,9 @@ public:
 	bool hasType(pkmn::Type t) const;
 	double calculateDamageMod(pkmn::Type t) const;
 	void fillSpecies(std::ifstream& file);
-	//void addMove(move m)
-	//void delMove(move m)
+	
+	void addMove(Move m);
+	void delMove(Move m);
 
 	//display methods
 	void display() const;
