@@ -49,11 +49,12 @@ public:
 	int getPriority() const;
 	int getPP() const;
 	int getMaxPP() const;
+	std::string getName() const;
 
 	void heal();
 	bool use(Pokemon* user, Pokemon* target);
 
-	string display() const;
+	std::string display() const;
 };
 
 std::ostream& operator << (std::ostream& stream, const Move& m);

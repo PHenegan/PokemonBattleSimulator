@@ -36,14 +36,18 @@ public:
 	Pokemon(int dexNum);
 	Pokemon(const Pokemon& p);
 
+	//mutator methods
 	void setDexNum(int dexNum);
 	void setStat(pkmn::Stat s, int value);
 	void setIV(pkmn::Stat s, int value);
 	void setEV(pkmn::Stat s, int value);
 	void setLevel(int n);
 
+
 	int getDexNum() const;
 	std::string getName() const;
+	
+	//stats
 	int getStat(pkmn::Stat s) const;
 	int getIV(pkmn::Stat s) const;
 	int getEV(pkmn::Stat s) const;
@@ -55,19 +59,23 @@ public:
 	int currentHP() const;
 	void addHP(int howMuch);
 	void subHP(int howMuch);
+	bool isFeinted() const;
 
+	//Moves
 	Move* getCurrMove() const;
 	void setCurrMove(int index);
 
 	Move getMove(int index) const;
 	int getNumMoves() const;
 
+	//Damage and Type related methods
 	bool hasType(pkmn::Type t) const;
 	double calculateDamageMod(pkmn::Type t) const;
 	void fillSpecies(std::ifstream& file);
 	//void addMove(move m)
 	//void delMove(move m)
 
+	//display methods
 	void display() const;
 	void displayMoves() const;
 
@@ -76,6 +84,7 @@ public:
 	bool operator < (const Pokemon &p) const;
 	bool operator == (const Pokemon &p) const;
 
+	//health operators
 	void operator += (int n);
 	void operator -= (int n);
 };

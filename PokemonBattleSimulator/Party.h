@@ -20,6 +20,8 @@ public:
 	Pokemon at(int index) const;
 	int size() const;
 
+	void display() const;
+
 	Pokemon operator [] (int index) const;
 };
 

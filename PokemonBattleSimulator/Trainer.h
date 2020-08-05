@@ -1,6 +1,7 @@
 #pragma once
 #include "Party.h"
 #include <string>
+#include <ostream>
 
 class Trainer
 {
@@ -12,12 +13,20 @@ private:
 public:
 	Trainer();
 	Trainer(std::string name, int money = 0);
-	Trainer(const Trainer& t);
 
+	std::string getName() const;
 	Party getParty() const;
 	Pokemon* getCurrentPokemon() const;
-	void getMoveChoice();
 	bool canFight() const;
-
 	int getReward() const;
+	
+	void getMoveChoice();
+	void battleSwitch();
+
+	void setParty(Party p);
+	void addPokemon(Pokemon p);
+
+	void addMoney(int howMuch);
 };
+
+std::ostream& operator << (std::ostream& stream, const Trainer& t);

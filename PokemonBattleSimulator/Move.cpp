@@ -159,7 +159,7 @@ bool Move::use(Pokemon* user, Pokemon* target)
 		double stab = user->hasType(m_type) ? 1.5 : 1.0;
 
 		//Attacks will do between 85% and 100% of their potential damage based on random rolls
-		double dRoll = (rand() % 16 + 85) / 100.0;
+		double dRoll = (static_cast<int>(rand() % 16) + 85) / 100.0;
 
 		//modifier based on how effective the type is on the target
 		double typeMod = target->calculateDamageMod(m_type);
@@ -170,7 +170,8 @@ bool Move::use(Pokemon* user, Pokemon* target)
 		damage = (lvlMod * m_power * static_cast<double>(user->getStat(atk)) / target->getStat(def)) / 50 + 2;
 		damage *= modifier;
 
-		*target -= damage;
+		//In the games, damage is rounded down to the nearest whole number
+		*target -= static_cast<int>(damage);
 	}
 
 	//if the move only changes stats, this will be called
@@ -182,6 +183,8 @@ bool Move::use(Pokemon* user, Pokemon* target)
 		}
 
 	m_PP--;
+
+	return !miss;
 }
 
 string Move::display() const
@@ -191,6 +194,7 @@ string Move::display() const
 	fName.replace(fName.find('_'), 1, " ");
 
 	formatted << fName << " (" << m_PP << "/ " << m_maxPP << " PP)";
+	return formatted.str();
 }
 
 ostream& operator << (std::ostream& stream, const Move& m)

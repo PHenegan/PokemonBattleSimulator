@@ -9,6 +9,9 @@ private:
 	Trainer* m_tr1;
 	Trainer* m_tr2;
 
+	Trainer** m_winner;
+	Trainer** m_loser;
+
 	void sortPriority(Pokemon** list, int size);
 	Battlefield();
 

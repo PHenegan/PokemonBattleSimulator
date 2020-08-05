@@ -4,21 +4,27 @@
 
 using namespace std;
 
-Pokemon::Pokemon() : m_name(""), m_currHP(0), m_level(0), m_dexNum(0), m_stats(), m_currMove(nullptr)
+Pokemon::Pokemon() : m_name(""), m_currHP(0), m_level(0), m_dexNum(0), m_stats(), m_EV(), m_IV(), m_statModifiers(), m_currMove(nullptr)
 {
 	//Initializes array values to 0
 	for (int i = 0; i < pkmn::NUM_STATS; i++)
 	{
 		m_stats[i] = 0;
+		m_statModifiers[i] = 0;
 		m_IV[i] = 0;
 		m_EV[i] = 0;
 	}
 }
 
-Pokemon::Pokemon(int dexNum) : m_name(""), m_currHP(0), m_level(0), m_dexNum(dexNum), m_stats(), m_currMove(nullptr)
+Pokemon::Pokemon(int dexNum) : m_name(""), m_currHP(0), m_level(0), m_dexNum(dexNum), m_stats(), m_EV(), m_IV(), m_statModifiers(), m_currMove(nullptr)
 {
 	for (int i = 0; i < pkmn::NUM_STATS; i++)
+	{
 		m_stats[i] = 0;
+		m_statModifiers[i] = 0;
+		m_IV[i] = 0;
+		m_EV[i] = 0;
+	}
 }
 
 void Pokemon::setDexNum(int dexNum)
@@ -117,6 +123,14 @@ void Pokemon::addStatMod(pkmn::Stat s, int value)
 		m_statModifiers[s] = -pkmn::STAT_DELTA;
 }
 
+void Pokemon::clearStatMods()
+{
+	for (int i = 0; i < pkmn::NUM_STATS; i++)
+	{
+		m_statModifiers[i] = 0;
+	}
+}
+
 //returns how much HP the Pokemon currently has
 int Pokemon::currentHP() const
 {
@@ -137,6 +151,11 @@ void Pokemon::subHP(int howMuch)
 
 	if (m_currHP < 0)
 		m_currHP = 0;
+}
+
+bool Pokemon::isFeinted() const
+{
+	return !(m_currHP > 0);
 }
 
 
@@ -166,7 +185,7 @@ Move Pokemon::getMove(int index) const
 
 int Pokemon::getNumMoves() const
 {
-	return m_moves.size();
+	return static_cast<int>(m_moves.size());
 }
 
 bool Pokemon::hasType(pkmn::Type t) const

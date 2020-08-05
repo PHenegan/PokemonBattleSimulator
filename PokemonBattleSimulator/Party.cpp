@@ -1,5 +1,6 @@
 #include "Party.h"
 #include "type.h"
+#include <iostream>
 
 using namespace std;
 
@@ -90,4 +91,12 @@ int Party::size() const
 Pokemon Party::operator [] (int index) const
 {
 	return this->at(index);
+}
+
+void Party::display() const
+{
+	for (int i = 0; i < m_size; i++)
+	{
+		cout << "{" << i << "} "; m_partyArray[i].display();
+	}
 }
