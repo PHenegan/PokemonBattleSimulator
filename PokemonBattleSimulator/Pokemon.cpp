@@ -6,8 +6,13 @@ using namespace std;
 
 Pokemon::Pokemon() : m_name(""), m_currHP(0), m_level(0), m_dexNum(0), m_stats(), m_currMove(nullptr)
 {
+	//Initializes array values to 0
 	for (int i = 0; i < pkmn::NUM_STATS; i++)
+	{
 		m_stats[i] = 0;
+		m_IV[i] = 0;
+		m_EV[i] = 0;
+	}
 }
 
 Pokemon::Pokemon(int dexNum) : m_name(""), m_currHP(0), m_level(0), m_dexNum(dexNum), m_stats(), m_currMove(nullptr)
@@ -21,6 +26,47 @@ void Pokemon::setDexNum(int dexNum)
 	this->m_dexNum = dexNum;
 }
 
+//sets the Pokemon's stat value when given a base stat value
+void Pokemon::setStat(pkmn::Stat s, int value)
+{
+	//this is how the calculation is actually done in Pokemon games
+	//the integer truncation is intended, as that is done in the games as well
+	m_stats[s] = (2 * value + m_IV[s] + (m_EV[s] / 4)) * m_level / 100;
+
+	if (s == pkmn::HP)
+		m_stats[s] += m_level + 10;
+	else
+		m_stats[s] += 5;
+
+}
+
+void Pokemon::setIV(pkmn::Stat s, int value)
+{
+	//ensures IVs are within the proper bounds
+	if (value > pkmn::MAX_IV)
+		value = pkmn::MAX_IV;
+	else if (value < 0)
+		value = 0;
+
+	m_IV[s] = value;
+}
+
+void Pokemon::setEV(pkmn::Stat s, int value)
+{
+	//ensures EVs are within the proper bounds
+	if (value > pkmn::MAX_EV)
+		value = pkmn::MAX_EV;
+	else if (value < 0)
+		value = 0;
+
+	m_EV[s] = value;
+}
+
+void Pokemon::setLevel(int n)
+{
+	m_level = n;
+}
+
 int Pokemon::getDexNum() const
 {
 	return m_dexNum;
@@ -31,17 +77,69 @@ string Pokemon::getName() const
 	return m_name;
 }
 
-//getStats
-
 int Pokemon::getStat(pkmn::Stat s) const
 {
-	return m_stats[s];
+	//this is the formula for how in-battle stat modifications are applied in the games
+	int numer = 2;
+	int denom = 2;
+	
+	if (m_statModifiers[s] > 0)
+		numer += m_statModifiers[s];
+	else
+		denom -= m_statModifiers[s];
+	double modifier = static_cast<double>(numer) / denom;
+
+	return static_cast<int> (m_stats[s] * modifier);
 }
 
+int Pokemon::getIV(pkmn::Stat s) const
+{
+	return m_IV[s];
+}
+
+int Pokemon::getEV(pkmn::Stat s) const
+{
+	return m_EV[s];
+}
+
+int Pokemon::getLevel() const
+{
+	return m_level;
+}
+
+void Pokemon::addStatMod(pkmn::Stat s, int value)
+{
+	m_statModifiers[s] += value;
+
+	if (m_statModifiers[s] > pkmn::STAT_DELTA)
+		m_statModifiers[s] = pkmn::STAT_DELTA;
+	else if (m_statModifiers[s] < -pkmn::STAT_DELTA)
+		m_statModifiers[s] = -pkmn::STAT_DELTA;
+}
+
+//returns how much HP the Pokemon currently has
 int Pokemon::currentHP() const
 {
 	return m_currHP;
 }
+
+void Pokemon::addHP(int howMuch)
+{
+	m_currHP += howMuch;
+
+	if (m_currHP > m_stats[pkmn::HP])
+		m_currHP = m_stats[pkmn::HP];
+}
+
+void Pokemon::subHP(int howMuch)
+{
+	m_currHP += howMuch;
+
+	if (m_currHP < 0)
+		m_currHP = 0;
+}
+
+
 
 Move* Pokemon::getCurrMove() const
 {
@@ -71,11 +169,22 @@ int Pokemon::getNumMoves() const
 	return m_moves.size();
 }
 
+bool Pokemon::hasType(pkmn::Type t) const
+{
+	bool result = false;
+	for (pkmn::Type m_type : m_types)
+		if (m_type == t)
+		{
+			result = true;
+			break;
+		}
+	return result;
+}
 
 //calculates the damage modifier a type has on this pokemon. Stacks for each type
 double Pokemon::calculateDamageMod(pkmn::Type t) const
 {
-	int mod = 1;
+	double mod = 1;
 	for (pkmn::Type type : m_types)
 		mod *= pkmn::typeModifiers[t][type];
 
@@ -178,8 +287,7 @@ void Pokemon::display() const
 void Pokemon::displayMoves() const
 {
 	for (int i = 0; i < m_moves.size(); i++)
-		cout << "[" << i + 1 << "]" << " : " << m_moves[i].m_name
-			<< " (" << m_moves[i].m_usesLeft << "/" << m_moves[i].m_maxUses << " PP)" << endl;
+		cout << "[" << i + 1 << "]" << " : " << m_moves[i].display();
 }
 
 bool Pokemon::operator > (const Pokemon& p) const
@@ -197,3 +305,12 @@ bool Pokemon::operator == (const Pokemon& p) const
 	return !(*this > p || *this < p);
 }
 
+void Pokemon::operator += (int n)
+{
+	this->addHP(n);
+}
+
+void Pokemon::operator -= (int n)
+{
+	this->subHP(n);
+}

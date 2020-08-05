@@ -1,11 +1,27 @@
 #pragma once
 #include "type.h"
 #include <string>
+#include <ostream>
 
 class Pokemon;
 
 class Move
 {
+private:
+	int m_userStatChanges[pkmn::NUM_STATS];
+	int m_targetStatChanges[pkmn::NUM_STATS];
+	pkmn::Type m_type;
+	std::string m_name;
+	int m_priority;
+	int m_power;
+	int m_accuracy;
+
+	//power points - how many times the move can be used
+	int m_maxPP;
+	int m_PP;
+
+	int statChanges[pkmn::NUM_STATS];
+	bool m_isSpecial;
 public:
 	/*
 	I had originally made these all private, but I realized that Most of the methods
@@ -13,31 +29,32 @@ public:
 	calculations will be done outside of the Move class (and are handled by the Battlefield)
 	I made the data members public
 	*/
-	pkmn::Type m_type;
-	std::string m_name;
-	int m_priority;
-	int m_damage;
-	int m_accuracy;
-
-	//Max power points - how many times the move can be used
-	int m_maxPP;
-	int m_PP;
-	int statChanges[pkmn::NUM_STATS];
-	bool m_isSpecial;
 
 	Move();
 	Move(std::string name);
 
 	void setName(std::string name);
-	void setDamage(int n);
+	void setPower(int n);
 	void setAccuracy(int n);
 	void setType(pkmn::Type t);
-	void setDamage(int n);
 	void setMaxPP(int n);
 	void setSpecial(bool isSp);
 	void setPriority(int n);
 
+	void setUserChanges(int n[pkmn::NUM_STATS]);
+	void setUserChanges(pkmn::Stat s, int value);
+	void setTargetChanges(int n[pkmn::NUM_STATS]);
+	void setTargetChanges(pkmn::Stat s, int value);
+
+	int getPriority() const;
+	int getPP() const;
+	int getMaxPP() const;
+
 	void heal();
-	void use(Pokemon* target);
+	bool use(Pokemon* user, Pokemon* target);
+
+	string display() const;
 };
+
+std::ostream& operator << (std::ostream& stream, const Move& m);
 

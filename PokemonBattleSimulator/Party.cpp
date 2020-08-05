@@ -16,7 +16,7 @@ Party::Party(std::initializer_list<Pokemon> list)
 	if (list.size() > pkmn::MAX_PARTY || list.size() == 0)
 		throw("Error: Party size is not valid");
 
-	m_size = list.size();
+	m_size = static_cast<int>(list.size());
 	m_partyArray = new Pokemon[m_size];
 
 	Pokemon* ptr = m_partyArray;

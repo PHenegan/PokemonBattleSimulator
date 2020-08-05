@@ -12,6 +12,7 @@ private:
 public:
 	Trainer();
 	Trainer(std::string name, int money = 0);
+	Trainer(const Trainer& t);
 
 	Party getParty() const;
 	Pokemon* getCurrentPokemon() const;

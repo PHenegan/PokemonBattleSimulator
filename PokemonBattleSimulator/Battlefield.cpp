@@ -34,7 +34,13 @@ void Battlefield::runTurn()
 	//sorts the move priority
 	sortPriority(pokemon, NUM_POKE);
 
+	//each Pokemon will use their move on the opposite pokemon
+	cout << pokemon[0]->getName() << " used " << pokemon[0]->getCurrMove() << "!" << endl;
+	if (pokemon[0]->getCurrMove()->use(pokemon[0], pokemon[1]))
+		cout << "It missed!" << endl
 
+
+	pokemon[1]->getCurrMove()->use(pokemon[1], pokemon[0]);
 
 	m_turn++;
 }
@@ -58,15 +64,15 @@ void Battlefield::sortPriority(Pokemon** list, int size)
 			Move* m2 = list[unsorted]->getCurrMove();
 
 			//If priority is different
-			if (m1->m_priority < m2->m_priority)
+			if (m1->getPriority() < m2->getPriority())
 				swap(list[sorted], list[unsorted]);
 			
 			//If priority is the same and speed is different
-			else if (m1->m_priority == m2->m_priority && *(list[sorted]) < *(list[unsorted]))
+			else if (m1->getPriority() == m2->getPriority() && *(list[sorted]) < *(list[unsorted]))
 				swap(list[sorted], list[unsorted]);
 			
 			//If priority is the same and speed is the same, determines randomly
-			else if (m1->m_priority == m2->m_priority && *(list[sorted]) == *(list[unsorted]))
+			else if (m1->getPriority() == m2->getPriority() && *(list[sorted]) == *(list[unsorted]))
 			{
 				int coin = rand() % 2;
 				if (coin)
@@ -74,9 +80,4 @@ void Battlefield::sortPriority(Pokemon** list, int size)
 			}
 
 		}
-}
-
-void useMove(Pokemon* user, Pokemon* target)
-{
-	
 }
