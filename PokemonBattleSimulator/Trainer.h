@@ -7,9 +7,9 @@ class Trainer
 {
 private:
 	std::string m_name;
-	Party m_party;
 	int m_money;
-
+protected:
+	Party m_party;
 public:
 	Trainer();
 	Trainer(std::string name, int money = 0);
@@ -18,15 +18,17 @@ public:
 	Party getParty() const;
 	Pokemon* getCurrentPokemon() const;
 	bool canFight() const;
-	int getReward() const;
 	
-	void getMoveChoice();
-	void battleSwitch();
+	virtual int getReward() const;
+	virtual void getMoveChoice();
+	virtual void battleSwitch();
 
 	void setParty(Party p);
 	void addPokemon(Pokemon p);
 
 	void addMoney(int howMuch);
+
+
 };
 
 std::ostream& operator << (std::ostream& stream, const Trainer& t);

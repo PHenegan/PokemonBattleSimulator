@@ -58,7 +58,9 @@ void Party::addMember(Pokemon p)
 
 	tempArray[m_size] = p;
 
+	delete[] m_partyArray;
 	m_partyArray = tempArray;
+	
 	m_size++;
 }
 
@@ -88,15 +90,18 @@ int Party::size() const
 	return m_size;
 }
 
-Pokemon Party::operator [] (int index) const
+Pokemon& Party::operator [] (int index) const
 {
-	return this->at(index);
+	if (index < 0 || index >= m_size)
+		throw("Party Error: index does not exist");
+
+	return m_partyArray[index];
 }
 
 void Party::display() const
 {
-	for (int i = 0; i < m_size; i++)
+	for (int i = 1; i <= m_size; i++)
 	{
-		cout << "{" << i << "} "; m_partyArray[i].display();
+		cout << "{" << i << "} : "; m_partyArray[i - 1].display();
 	}
 }

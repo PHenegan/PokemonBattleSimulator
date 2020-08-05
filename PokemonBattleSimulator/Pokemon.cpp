@@ -35,11 +35,11 @@ Pokemon::Pokemon(const Pokemon& p)
 	this->m_level = p.m_level;
 	this->m_currMove = nullptr;
 
-	for (Move m : p.m_moves)
+	for (int i = 0; i < p.getNumMoves(); i++)
 	{
-		m_moves.push_back(m);
-		if (m == *p.getCurrMove())
-			this->m_currMove = &m_moves.back();
+		m_moves.push_back(p.m_moves[i]);
+		if (p.getCurrMove() != nullptr && m_moves[i] == *(p.getCurrMove()))
+			this->m_currMove = &m_moves[i];
 	}
 
 	for (pkmn::Type t : p.m_types)
@@ -355,7 +355,7 @@ void Pokemon::display() const
 void Pokemon::displayMoves() const
 {
 	for (int i = 0; i < m_moves.size(); i++)
-		cout << "[" << i + 1 << "]" << " : " << m_moves[i].display();
+		cout << "[" << i + 1 << "] : " << m_moves[i].display() << endl;
 }
 
 bool Pokemon::operator > (const Pokemon& p) const

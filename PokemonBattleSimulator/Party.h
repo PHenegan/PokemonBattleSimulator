@@ -22,6 +22,6 @@ public:
 
 	void display() const;
 
-	Pokemon operator [] (int index) const;
+	Pokemon& operator [] (int index) const;
 };
 

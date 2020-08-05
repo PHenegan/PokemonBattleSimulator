@@ -10,7 +10,7 @@ Trainer::Trainer() : m_name(""), m_party(), m_money(0)
 Trainer::Trainer(string name, int money /*= 0*/)
 {
 	this->m_name = name;
-	m_money = money;
+	this->m_money = money;
 }
 
 string Trainer::getName() const 
@@ -84,14 +84,13 @@ void Trainer::battleSwitch()
 		cin.ignore();
 
 		if (choice < 1 || choice > m_party.size())
-		{
 			cout << "Please enter the number of one of the above Pokemon." << endl;
-		}
 		else if (m_party[choice].isFeinted())
 			cout << "You cannot switch into a Pokemon that cannot Battle." << endl;
-
-		m_party.switchMembers(0, choice - 1);
+		else
+			validChoice = true;
 	} 
+	m_party.switchMembers(0, choice - 1);
 
 }
 
@@ -99,6 +98,13 @@ void Trainer::setParty(Party p)
 {
 	m_party = p;
 }
+
+void Trainer::addPokemon(Pokemon p)
+{
+	if (m_party.size() < pkmn::MAX_PARTY)
+		m_party.addMember(p);
+}
+
 
 //adds the specified amount to the trainer's wallet. howMuch can be negative
 void Trainer::addMoney(int howMuch)

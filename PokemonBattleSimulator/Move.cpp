@@ -189,9 +189,15 @@ bool Move::use(Pokemon* user, Pokemon* target)
 
 string Move::display() const
 {
+	string fName;
 	ostringstream formatted;
-	string fName = m_name;
-	fName.replace(fName.find('_'), 1, " ");
+	for (int i = 0; i < static_cast<int>(m_name.size()); i++)
+	{
+		if (m_name.at(i) == '_')
+			fName += ' ';
+		else
+			fName += m_name.at(i);
+	}
 
 	formatted << fName << " (" << m_PP << "/ " << m_maxPP << " PP)";
 	return formatted.str();
@@ -200,14 +206,20 @@ string Move::display() const
 //the only unique value in a move is its name, so that is the only thing needed to compare moves
 bool Move::operator == (const Move& m) const
 {
-	return m.m_name == this->m_name;
+	return m.m_name == m_name;
 }
 
 ostream& operator << (std::ostream& stream, const Move& m)
 {
-	string formatted = m.getName();
-	formatted.replace(formatted.find('_'), 1, " ");
-
+	string name = m.getName();
+	string formatted;
+	for (int i = 0; i < static_cast<int>(name.size()); i++)
+	{
+		if (name.at(i) == '_')
+			formatted += ' ';
+		else
+			formatted += name.at(i);
+	}
 	stream << formatted;
 	return stream;
 }

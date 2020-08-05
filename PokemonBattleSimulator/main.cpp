@@ -2,6 +2,8 @@
 #include <sstream>
 #include "type.h"
 #include "Pokemon.h"
+#include "Bot.h"
+#include "Battlefield.h"
 #include <ctime>
 #include <cstdlib>
 
@@ -28,6 +30,9 @@ int main()
 
 	pkmn::setTypeModifiers(types);
 
+	Trainer t1("Patrick");
+	Bot bot("Kyle", 500);
+
 	Pokemon p1(637);
 	p1.setLevel(100);
 	p1.fillSpecies(pokeList);
@@ -53,10 +58,16 @@ int main()
 	p1.addMove(m1);
 	p2.addMove(m1);
 	p2.addMove(m2);
+	
+	t1.addPokemon(p1);
+	bot.addPokemon(p2);
 
-	p2.setCurrMove(1);
-	p2.getCurrMove()->use(&p2, &p1);
-	p1.display();
+	Trainer* ptr = &bot;
+
+	ptr->getMoveChoice();
+
+	Battlefield field(&t1, &bot);
+	field.battle();
 }
 
 //reads type modifiers from a file and checks that the final array is valid

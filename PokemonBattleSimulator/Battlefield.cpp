@@ -7,6 +7,7 @@ using namespace std;
 Battlefield::Battlefield(Trainer* tr1, Trainer* tr2)
 {
 	m_turn = 0;
+
 	this->m_tr1 = tr1;
 	this->m_tr2 = tr2;
 
@@ -27,8 +28,12 @@ void Battlefield::battle()
 		this->runTurn();
 	}
 
-	cout << **m_winner << " wins the battle!" << endl;
+	cout << **m_winner << " defeated " << **m_loser << '!' << endl;
 
+	(*m_winner)->addMoney((*m_loser)->getReward());
+
+	m_tr1->setParty(p1);
+	m_tr2->setParty(p2);
 }
 
 void Battlefield::runTurn()
@@ -47,14 +52,14 @@ void Battlefield::runTurn()
 	sortPriority(pokemon, NUM_POKE);
 
 	//each Pokemon will use their move on the opposite pokemon
-	cout << pokemon[0]->getName() << " used " << pokemon[0]->getCurrMove() << "!" << endl;
+	cout << pokemon[0]->getName() << " used " << *pokemon[0]->getCurrMove() << "!" << endl;
 	if (!pokemon[0]->getCurrMove()->use(pokemon[0], pokemon[1]))
 		cout << "It missed!" << endl;
 
 	//If the first attack landed and didn't cause the pokemon to feint, the second pokemon uses its move
 	if (!pokemon[1]->isFeinted())
 	{
-		cout << pokemon[1]->getName() << " used " << pokemon[1]->getCurrMove() << "!" << endl;
+		cout << pokemon[1]->getName() << " used " << *pokemon[1]->getCurrMove() << "!" << endl;
 		if (!pokemon[1]->getCurrMove()->use(pokemon[1], pokemon[0]))
 			cout << "It missed!" << endl;
 	}
@@ -65,14 +70,19 @@ void Battlefield::runTurn()
 		m_tr1->battleSwitch();
 
 	else if (!m_tr1->canFight())
+	{
 		m_winner = &m_tr2;
-	
+		m_loser = &m_tr2;
+	}
 
 	if (m_tr2->getCurrentPokemon()->isFeinted() && m_tr2->canFight())
 		m_tr2->battleSwitch();
 	
 	else if (!m_tr2->canFight())
+	{
 		m_winner = &m_tr1;
+		m_loser = &m_tr2;
+	}
 
 	m_turn++;
 }
@@ -80,7 +90,7 @@ void Battlefield::runTurn()
 void Battlefield::display() const
 {
 	m_tr2->getCurrentPokemon()->display();
-	cout << "\n\n\n\n";
+	cout << "\n\n";
 	m_tr1->getCurrentPokemon()->display();
 }
 

@@ -4,14 +4,16 @@
 class Bot : public Trainer
 {
 private:
-	int reward;
+	int m_reward;
 
 public:
 
 	Bot();
-	Bot(std::string name);
+	Bot(std::string name, int reward = 500);
 
+	void getMoveChoice();
+	void battleSwitch();
 
-
+	int getReward();
 };
 
