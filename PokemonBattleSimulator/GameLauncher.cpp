@@ -1,6 +1,7 @@
 #include "GameLauncher.h"
 
 using namespace std;
+using namespace pkmn;
 
 //the strings are the names of the files that will be loaded
 GameLauncher::GameLauncher(string pokemonList, string movepool, string moveData)
@@ -12,6 +13,17 @@ GameLauncher::GameLauncher(string pokemonList, string movepool, string moveData)
 	if (this->checkFiles())
 		throw("Game Launcher error: one or more of the files provided does not exist or could not be accessed.");
 	this->fillDex();
+}
+
+//closes the files and frees dynamically allocated memory
+GameLauncher::~GameLauncher()
+{
+	m_pokemonList.close();
+	m_moveData.close();
+	m_pokemonMovepool.close();
+	m_saveFile.close();
+
+	delete m_player;
 }
 
 //returns true if a file has failed
@@ -56,15 +68,13 @@ void GameLauncher::launch()
 	{
 		cout << "Enter your name: ";
 		getline(cin, name);
-		name += ".txt";
-		m_saveFile.open(name);
-
-
-		isGood = !m_saveFile.fail();
+		m_saveFile.open("trainers\\" + name + ".txt");
 
 		//if there is a problem, the user can either try again or create a new save
+		isGood = !m_saveFile.fail();
 		if (!isGood)
 		{
+			m_saveFile.close();
 			char choice;
 			cout << "A save file for that name was not found or could not be accessed." << endl;
 			cout << "Should a new save file be created with that name? (y/N): ";
@@ -74,13 +84,100 @@ void GameLauncher::launch()
 			newSave = (tolower(choice) == 'y');
 		}
 	} while (!(isGood || newSave));
+
+	if (isGood)
+	{
+		this->loadSave(name);
+	}
+	m_player->getCurrentPokemon()->display();
+	m_player->getCurrentPokemon()->displayMoves();
 }
 
+//initializes the trainer with a new file
 void GameLauncher::newTrainer(string name)
 {
-	player = Trainer(name);
-	cout << "Since you don't have any Pokemon, why don't you catch one?" << endl;
+	m_player = new Trainer(name);
+	cout << "Welcome to the world of Pokemon " << name << "!" << endl
+		<< "Since you don't have any Pokemon, why don't you catch one?" << endl;
 	wildEncounter();
+}
+
+//initializes the trainer based on the save file of the given name
+void GameLauncher::loadSave(string name)
+{
+	//resets to the beginning location in case the file was previously read from
+	m_saveFile.seekg(0);
+	m_saveFile.clear();
+
+	int pokeCount = 0;
+	int money; m_saveFile >> money;
+	this->m_player = new Trainer(name, money);
+	
+	string line;
+	Pokemon currentPokemon;
+	
+	try
+	{
+		while (getline(m_saveFile, line) && pokeCount < MAX_PARTY)
+		{
+
+			int num;
+			string word;
+			istringstream lineStream(line);
+			lineStream >> word;
+
+			if (word == "@p")
+			{
+				//If a pokemon has already been found, fills its stats and adds it to the party
+				if (pokeCount > 0)
+				{
+					currentPokemon.fillSpecies(m_pokemonList);
+					m_player->addPokemon(currentPokemon);
+				}
+
+				lineStream >> num; currentPokemon = Pokemon(num);
+				lineStream >> num; currentPokemon.setLevel(num);
+
+				pokeCount++;
+			}
+			else if (pokeCount > 0 && word == "IV")
+				//iterates through the line and gets the stats
+				for (Stat i = HP; i <= SPEED && !lineStream.eof(); i = static_cast<Stat>(i + 1))
+				{
+					lineStream >> num;
+					currentPokemon.setIV(i, num);
+				}
+
+			else if (pokeCount > 0 && word == "EV")
+				//iterates through the line and gets the stats
+				for (Stat i = HP; i <= SPEED && !lineStream.eof(); i = static_cast<Stat>(i + 1))
+				{
+					lineStream >> num;
+					currentPokemon.setEV(i, num);
+				}
+			else if (pokeCount > 0 && word.length() > 0)
+			{
+				Move m = getMove(word);
+				currentPokemon.addMove(m);
+			}
+		}
+		//The last Pokemon won't be added, so it is added here
+		if (pokeCount > 0 && m_player->getParty().size() < MAX_PARTY)
+		{
+			currentPokemon.fillSpecies(m_pokemonList);
+			m_player->addPokemon(currentPokemon);
+		}
+	}
+	catch (string s)
+	{
+		string error = "Save File Error : incorrect formatting after Party Member " + to_string(pokeCount);
+		error += "\n" + s;
+		throw error;
+	}
+	catch (...)
+	{
+		throw ("Save File Error: incorrect formatting after Party Member " + to_string(pokeCount));
+	}
 }
 
 //The trainer encounters a random encounter and is prompted to decide whether or not they should catch it
@@ -89,6 +186,10 @@ void GameLauncher::wildEncounter()
 	Pokemon p = getEncounter();
 	cout << "You found a Pokemon!" << endl;
 	p.display();
+	p.displayMoves();
+
+
+	cout << "Catch it? (Y/n): ";
 }
 
 //gets a random Pokemon with randomized EVs/IVs, a randomized level, and a randomized moveset
@@ -101,7 +202,7 @@ Pokemon GameLauncher::getEncounter()
 
 	//randomizes stats and sets them to the pokemon
 	int level = rand() % 16 + 85;
-	for (pkmn::Stat s = pkmn::HP; s < pkmn::SPEED; s = static_cast<pkmn::Stat>(s + 1))
+	for (Stat s = HP; s <= SPEED; s = static_cast<Stat>(s + 1))
 	{
 		p.setEV(s, rand() % 253);
 		p.setIV(s, rand() % 32);
@@ -128,7 +229,7 @@ Pokemon GameLauncher::getEncounter()
 
 	//Finds gets a random move from the movepool, adds it to the pokemon, and removes the move from the list
 	//this prevents a move from getting picked twice
-	for (int i = 0; i < pkmn::MAX_MOVES && moveList.size() != 0; i++)
+	for (int i = 0; i < MAX_MOVES && moveList.size() != 0; i++)
 	{
 		random = rand() % moveList.size();
 		Move m = getMove(moveList[random]);
@@ -158,22 +259,29 @@ Move GameLauncher::getMove(string name)
 		istringstream lineStream(line);
 		lineStream >> word;
 
+		bool found = false;
 		//If the move's data has been found, writes it into the move's members
 		if (word == name)
 		{
-			lineStream >> word; m.setType(name);
+			found = true;
+
+			lineStream >> word; m.setType(word);
 			lineStream >> num; m.setPower(num);
 			lineStream >> num; m.setAccuracy(num);
 			lineStream >> num; m.setMaxPP(num);
 			lineStream >> num; m.setSpecial(static_cast<bool>(num));
 			lineStream >> num; m.setPriority(num);
 
-			for (pkmn::Stat i = pkmn::HP; i < pkmn::SPEED; i = static_cast<pkmn::Stat>(i + 1))
+			//If stat changes are provided, iterates through them and adds them to the Move
+			
+			//The next 6 numbers (if present) will be the user stat changes
+			for (Stat i = HP; i <= SPEED && !lineStream.eof(); i = static_cast<Stat>(i + 1))
 			{
 				lineStream >> num;
 				m.setUserChanges(i, num);
 			}
-			for (pkmn::Stat i = pkmn::HP; i < pkmn::SPEED; i = static_cast<pkmn::Stat>(i + 1))
+			//The next 6 numbers (if present) will be the target stat changes
+			for (Stat i = HP; i <= SPEED && !lineStream.eof(); i = static_cast<Stat>(i + 1))
 			{
 				lineStream >> num;
 				m.setTargetChanges(i, num);

@@ -1,9 +1,7 @@
 #pragma once
 #include <iostream>
 #include <sstream>
-#include <string>
 #include "Trainer.h"
-#include <vector>
 
 class GameLauncher
 {
@@ -16,13 +14,13 @@ private:
 
 	std::vector<int> m_dexList;
 
-	Trainer player;
+	Trainer* m_player;
 
 	GameLauncher();
 
 public:
 	GameLauncher(std::string pokemonList, std::string pokemonMovepool, std::string moveData);
-	//~GameLauncher();
+	~GameLauncher();
 
 	bool checkFiles() const;
 
@@ -40,5 +38,3 @@ public:
 
 	void randomTrainerBattle();
 };
-
-

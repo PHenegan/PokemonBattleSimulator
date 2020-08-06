@@ -41,7 +41,8 @@ Party::Party(const Party& p)
 //destructor
 Party::~Party()
 {
-	delete[] m_partyArray;
+	if (m_size > 0)
+		delete[] m_partyArray;
 }
 
 //Adds specified Pokemon to the party
@@ -58,7 +59,8 @@ void Party::addMember(Pokemon p)
 
 	tempArray[m_size] = p;
 
-	delete[] m_partyArray;
+	if (m_size > 0)
+		delete[] m_partyArray;
 	m_partyArray = tempArray;
 	
 	m_size++;

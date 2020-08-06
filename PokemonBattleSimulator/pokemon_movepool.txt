@@ -11,6 +11,9 @@ Dragon_Dance
 Dragon_Claw
 Air_Slash
 Flamethrower
+Fire_Blast
+Thunder_Punch
+Brick_Break
 @p 9
 Aqua_Tail
 Earthquake

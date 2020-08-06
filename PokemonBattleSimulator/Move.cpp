@@ -186,7 +186,7 @@ bool Move::use(Pokemon* user, Pokemon* target)
 		double stab = user->hasType(m_type) ? 1.5 : 1.0;
 
 		//Attacks will do between 85% and 100% of their potential damage based on random rolls
-		double dRoll = static_cast<double>(rand() % 16 + 85) / 100;
+		double dRoll = (static_cast<double>(rand() % 16) + 85) / 100;
 
 		//modifier based on how effective the type is on the target
 		double typeMod = target->calculateDamageMod(m_type);

@@ -20,7 +20,6 @@ private:
 	int m_maxPP;
 	int m_PP;
 
-	int statChanges[pkmn::NUM_STATS];
 	bool m_isSpecial;
 public:
 	/*

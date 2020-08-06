@@ -24,14 +24,10 @@ int main()
 {
 	srand(time(0));
 	ifstream typeMods("type_modifiers.txt");
-	GameLauncher game("pokemon_list.txt", "pokemon_movepool.txt", "move_data.txt");
-
-	Pokemon p = game.getEncounter();
-
-	p.display();
-	p.displayMoves();
-
 	setTypeModifiers(typeMods);
+
+	GameLauncher game("pokemon_list.txt", "pokemon_movepool.txt", "move_data.txt");
+	game.launch();
 }
 
 //reads type modifiers from a file and checks that the final array is valid
