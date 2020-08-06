@@ -181,11 +181,38 @@ void GameLauncher::loadSave(string name)
 	}
 }
 
+//Writes trainer data into a save file labeled by the trainer's name
 void GameLauncher::writeSave()
 {
 	m_saveFile.close();
 	ofstream out("trainers\\" + m_player->getName() + ".txt");
+	
+	if (out.fail())
+		throw("Error: could not write to save file");
+	
+	Party p = m_player->getParty();
 
+	out << m_player->getMoney() << endl;
+	for (int i = 0; i < p.size(); i++)
+	{
+		out << "@p " << p[i].getName() << p[i].getLevel() << endl;
+		
+		//writes IV values to the file
+		out << "IV";
+		for (Stat s = HP; s <= SPEED; s = static_cast<Stat>(s + 1))
+			out << " " << p[i].getIV(s);
+		out << endl;
+
+		//writes EV values to the file
+		out << "EV";
+		for (Stat s = HP; s <= SPEED; s = static_cast<Stat>(s + 1))
+			out << " " << p[i].getEV(s);
+		out << endl;
+
+		//Writes move names to the file
+		for (int j = 0; j < p[j].getNumMoves(); j++)
+			out << p[j].getMove(j).getName() << endl;
+	}
 
 }
 

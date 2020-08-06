@@ -28,6 +28,7 @@ public:
 	void addPokemon(Pokemon p);
 
 	void addMoney(int howMuch);
+	int getMoney() const;
 
 	void heal();
 

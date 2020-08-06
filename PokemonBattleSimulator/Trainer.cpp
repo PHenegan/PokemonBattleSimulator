@@ -126,6 +126,12 @@ void Trainer::addMoney(int howMuch)
 		m_money = 0;
 }
 
+//returns the amount of money the trainer has
+int Trainer::getMoney() const
+{
+	return m_money;
+}
+
 //Heals all of the Pokemon in the trainer's party
 void Trainer::heal()
 {
