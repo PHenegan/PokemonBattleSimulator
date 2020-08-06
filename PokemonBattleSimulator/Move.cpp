@@ -39,26 +39,31 @@ Move::Move(string name)
 	}
 }
 
+//sets the name
 void Move::setName(string name)
 {
 	this->m_name = name;
 }
 
+//sets the power of the move
 void Move::setPower(int n)
 {
 	m_power = n;
 }
 
+//sets the move's accuracy
 void Move::setAccuracy(int n)
 {
 	m_accuracy = n;
 }
 
+//sets the move's type
 void Move::setType(pkmn::Type t)
 {
 	m_type = t;
 }
 
+//sets the move's type with a string
 void Move::setType(string s)
 {
 	//iterates through the list of types until it finds the type
@@ -77,16 +82,19 @@ void Move::setMaxPP(int n)
 	m_PP = n;
 }
 
+//sets whether or not the move is a special attack
 void Move::setSpecial(bool isSp)
 {
 	m_isSpecial = isSp;
 }
 
+//sets the priority level of the move
 void Move::setPriority(int n)
 {
 	m_priority = n;
 }
 
+//sets the changes to be made in the user's stats
 void Move::setUserChanges(int stats[pkmn::NUM_STATS])
 {
 	for (int i = 0; i < pkmn::NUM_STATS; i++)
@@ -95,6 +103,7 @@ void Move::setUserChanges(int stats[pkmn::NUM_STATS])
 	}
 }
 
+//sets the value of an individual user stat to be changed i
 void Move::setUserChanges(pkmn::Stat s, int value)
 {
 	//ensures that the value is within the specified range
@@ -106,6 +115,7 @@ void Move::setUserChanges(pkmn::Stat s, int value)
 	m_userStatChanges[s] = value;
 }
 
+//sets the changes to be made in the target's stats
 void Move::setTargetChanges(int stats[pkmn::NUM_STATS])
 {
 	for (int i = 0; i < pkmn::NUM_STATS; i++)
@@ -114,6 +124,7 @@ void Move::setTargetChanges(int stats[pkmn::NUM_STATS])
 	}
 }
 
+//sets the value of an individual target stat to be changed
 void Move::setTargetChanges(pkmn::Stat s, int value)
 {
 	//ensures that the value is within the specified range
@@ -125,26 +136,31 @@ void Move::setTargetChanges(pkmn::Stat s, int value)
 	m_targetStatChanges[s] = value;
 }
 
+//accessor for the move's priority level
 int Move::getPriority() const
 {
 	return m_priority;
 }
 
+//returns the amount of uses the move has left
 int Move::getPP() const
 {
 	return m_PP;
 }
 
+//returns the maximum amount of uses the move can have
 int Move::getMaxPP() const
 {
 	return m_maxPP;
 }
 
+//returns the move's name
 string Move::getName() const
 {
 	return m_name;
 }
 
+//restores the move's number of uses to its maximum value
 void Move::heal()
 {
 	m_PP = m_maxPP;
@@ -198,10 +214,13 @@ bool Move::use(Pokemon* user, Pokemon* target)
 	return !miss;
 }
 
+//displays the move along with the amount of uses it has left
 string Move::display() const
 {
 	string fName;
 	ostringstream formatted;
+
+	//gets rid of the underscore present in the move's name (if the name is multiple words)
 	for (int i = 0; i < static_cast<int>(m_name.size()); i++)
 	{
 		if (m_name.at(i) == '_')
@@ -220,6 +239,7 @@ bool Move::operator == (const Move& m) const
 	return m.m_name == m_name;
 }
 
+//outputs the formatted name of the move to the stream
 ostream& operator << (std::ostream& stream, const Move& m)
 {
 	string name = m.getName();

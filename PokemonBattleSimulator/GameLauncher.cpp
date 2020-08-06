@@ -36,6 +36,7 @@ void GameLauncher::fillDex()
 	}
 }
 
+//runs the game and gets the user's name
 void GameLauncher::launch()
 {
 	string name;
@@ -59,11 +60,11 @@ void GameLauncher::launch()
 		{
 			char choice;
 			cout << "A save file for that name was not found or could not be accessed." << endl;
-			cout << "Enter 0 to create a new save file or anything else to try again";
+			cout << "should a new save file be created? (y/n): ";
 			cin >> choice;
 			cin.ignore();
 			
-			newSave = (choice == '0');
+			newSave = (tolower(choice) == 'y');
 		}
 	} while (!(isGood || newSave));
 }
@@ -75,20 +76,12 @@ void GameLauncher::newTrainer(string name)
 	wildEncounter();
 }
 
+//The trainer encounters a random encounter and is prompted to decide whether or not they should catch it
 void GameLauncher::wildEncounter() 
 {
 	Pokemon p = getEncounter();
 	cout << "You found a Pokemon!" << endl;
 	p.display();
-
-	bool shouldCatch;
-	int choice;
-	cout << "Enter 1 to catch the pokemon, or anything else to run away.";
-	if (choice == 1)
-	{
-
-	}
-
 }
 
 //gets a random Pokemon with randomized EVs/IVs, a randomized level, and a randomized moveset
@@ -172,4 +165,6 @@ Move GameLauncher::getMove(string name)
 			break;
 		}
 	}
+
+	return m;
 }

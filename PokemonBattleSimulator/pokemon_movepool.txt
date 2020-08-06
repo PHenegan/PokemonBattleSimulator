@@ -1,23 +1,43 @@
 @p 3
 Seed_Bomb
-Razer_Leaf
 Sludge_Bomb
-Energy_Ball
 Earthquake
-Earth_Power
 Defense_Curl
-Synthesis
 @p 6
-Swords_Dance
 Dragon_Dance
 Dragon_Claw
 Air_Slash
 Flamethrower
-Fire_Fang
-Thunder_Punch
-Roost
 @p 9
 Aqua_Tail
-Water_Pulse
+Earthquake
 Ice_Beam
 Iron_Defense
+
+
+@p 143
+Body_Slam
+Iron_Defense
+Iron_Head
+Earthquake
+
+@p 149
+Dragon_Dance
+Dragon_Claw
+Air_Slash
+Dragon_Pulse
+@p 150
+Aura_Sphere
+Psystrike
+Psychic
+Shadow_Ball
+@p 248
+Earthquake
+Crunch
+Flamethrower
+Thunderbolt
+@p 378
+Bullet_Punch
+Earthquake
+Iron_Head
+Brick_Break
