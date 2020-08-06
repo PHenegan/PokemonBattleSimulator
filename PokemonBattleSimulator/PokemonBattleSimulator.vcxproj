@@ -140,7 +140,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Battlefield.cpp" />
-    <ClCompile Include="Bot.cpp" />
     <ClCompile Include="GameLauncher.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Move.cpp" />
@@ -150,7 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Battlefield.h" />
-    <ClInclude Include="Bot.h" />
     <ClInclude Include="GameLauncher.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="Party.h" />

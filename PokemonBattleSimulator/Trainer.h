@@ -8,7 +8,6 @@ class Trainer
 private:
 	std::string m_name;
 	int m_money;
-protected:
 	Party m_party;
 public:
 	Trainer();

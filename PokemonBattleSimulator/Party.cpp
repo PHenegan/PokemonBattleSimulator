@@ -32,9 +32,10 @@ Party::Party(std::initializer_list<Pokemon> list)
 Party::Party(const Party& p)
 {
 	this->m_size = p.size();
+	m_partyArray = new Pokemon[m_size];
 	for (int i = 0; i < m_size; i++)
 	{
-		m_partyArray[i] = p[i];
+		m_partyArray[i] = p.at(i);
 	}
 }
 

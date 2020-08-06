@@ -10,6 +10,8 @@ GameLauncher::GameLauncher(string pokemonList, string movepool, string moveData)
 	m_pokemonMovepool.open(movepool);
 	m_moveData.open(moveData);
 
+	m_player = nullptr;
+
 	if (this->checkFiles())
 		throw("Game Launcher error: one or more of the files provided does not exist or could not be accessed.");
 	this->fillDex();
@@ -193,7 +195,7 @@ void GameLauncher::writeSave()
 	Party p = m_player->getParty();
 
 	out << m_player->getMoney() << endl;
-	for (int i = 0; i < p.size(); i++)
+	for (int i = 0; i < m_player->partySize(); i++)
 	{
 		out << "@p " << p[i].getName() << p[i].getLevel() << endl;
 		
@@ -266,7 +268,11 @@ void GameLauncher::wildEncounter()
 	p.display();
 	p.displayMoves();
 
-	cout << "Catch it? (Y/n): ";
+	//cout << "Catch it? (Y/n): ";
+	cout << "You caught it!" << endl;
+	m_player->addPokemon(p);
+	m_player->getParty().display();
+
 }
 
 //Gets Move of specified name

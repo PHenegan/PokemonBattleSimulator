@@ -20,12 +20,21 @@ namespace pkmn
 
 int main()
 {
+	ifstream pkmnFile("pokemon_list.txt");
 	srand(time(0));
 	ifstream typeMods("type_modifiers.txt");
 	setTypeModifiers(typeMods);
 
-	GameLauncher game("pokemon_list.txt", "pokemon_movepool.txt", "move_data.txt");
-	game.launch();
+	Trainer t("Patrick", 1000);
+	Pokemon p(3);
+	p.fillSpecies(pkmnFile);
+
+	t.addPokemon(p);
+	t.getParty().display();
+
+
+	//GameLauncher game("pokemon_list.txt", "pokemon_movepool.txt", "move_data.txt");
+	//game.launch();
 }
 
 //reads type modifiers from a file and checks that the final array is valid

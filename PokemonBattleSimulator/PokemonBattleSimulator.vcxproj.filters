@@ -33,9 +33,6 @@
     <ClCompile Include="Battlefield.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Bot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameLauncher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,9 +54,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Party.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameLauncher.h">
