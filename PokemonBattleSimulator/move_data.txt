@@ -1,0 +1,7 @@
+Seed_Bomb Grass 80 100 24 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Sludge_Bomb Poison 90 100 16 1 0 0 0 0 0 0 0 0 0 0 0 0 0
+Earthquake Ground 100 100 16 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Defense_Curl Normal 0 -1 40 1 0 0 0 1 0 0 0 0 0 0 0 0 0
+Energy_Ball Grass 90 100 16 1 0 0 0 0 0 0 0 0 0 0 0 0 0
+Leaf_Storm Grass 130 90 8 1 0 0 0 0 -2 0 0 0 0 0 0 0 0
+Body_Slam Normal 85 100 24 0 0 0 0 0 0 0 0 0 0 0 0 0 0

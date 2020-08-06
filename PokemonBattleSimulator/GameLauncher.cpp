@@ -3,14 +3,21 @@
 using namespace std;
 
 //the strings are the names of the files that will be loaded
-GameLauncher::GameLauncher(string pokemonList, string movepool, string moveData, string wildData)
+GameLauncher::GameLauncher(string pokemonList, string movepool, string moveData)
 {
 	m_pokemonList.open(pokemonList);
 	m_pokemonMovepool.open(movepool);
 	m_moveData.open(moveData);
-	m_wildData.open(wildData);
 
+	if (this->checkFiles())
+		throw("Game Launcher error: one or more of the files provided does not exist or could not be accessed.");
 	this->fillDex();
+}
+
+//returns true if a file has failed
+bool GameLauncher::checkFiles() const
+{
+	return (m_pokemonList.fail() || m_pokemonMovepool.fail() || m_moveData.fail());
 }
 
 //fills the pokedex with the numbers of available pokemon
@@ -60,7 +67,7 @@ void GameLauncher::launch()
 		{
 			char choice;
 			cout << "A save file for that name was not found or could not be accessed." << endl;
-			cout << "should a new save file be created? (y/n): ";
+			cout << "Should a new save file be created with that name? (y/N): ";
 			cin >> choice;
 			cin.ignore();
 			
@@ -88,7 +95,7 @@ void GameLauncher::wildEncounter()
 Pokemon GameLauncher::getEncounter()
 {
 	//gets the Pokemon species and creates the Pokemon
-	int random = rand() % m_dexList.size();
+	int random = 0; //rand() % m_dexList.size();
 	
 	Pokemon p(m_dexList[random]);
 
@@ -104,7 +111,7 @@ Pokemon GameLauncher::getEncounter()
 
 	//Gets movepool by looking through the pokemon's file
 	vector<string> moveList;
-	bool foundTarget;
+	bool foundTarget = false;
 	while (!m_pokemonMovepool.eof())
 	{
 		string line;
@@ -119,8 +126,17 @@ Pokemon GameLauncher::getEncounter()
 			moveList.push_back(line);
 	}
 
+	//Finds gets a random move from the movepool, adds it to the pokemon, and removes the move from the list
+	//this prevents a move from getting picked twice
+	for (int i = 0; i < pkmn::MAX_MOVES && moveList.size() != 0; i++)
+	{
+		random = rand() % moveList.size();
+		Move m = getMove(moveList[random]);
+		p.addMove(m);
 
-
+		vector<string>::iterator position = moveList.begin() + random;
+		moveList.erase(position);
+	}
 
 	return p;
 }
@@ -149,6 +165,7 @@ Move GameLauncher::getMove(string name)
 			lineStream >> num; m.setPower(num);
 			lineStream >> num; m.setAccuracy(num);
 			lineStream >> num; m.setMaxPP(num);
+			lineStream >> num; m.setSpecial(static_cast<bool>(num));
 			lineStream >> num; m.setPriority(num);
 
 			for (pkmn::Stat i = pkmn::HP; i < pkmn::SPEED; i = static_cast<pkmn::Stat>(i + 1))

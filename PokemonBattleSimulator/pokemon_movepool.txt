@@ -3,6 +3,9 @@ Seed_Bomb
 Sludge_Bomb
 Earthquake
 Defense_Curl
+Energy_Ball
+Leaf_Storm
+Body_Slam
 @p 6
 Dragon_Dance
 Dragon_Claw
@@ -13,14 +16,11 @@ Aqua_Tail
 Earthquake
 Ice_Beam
 Iron_Defense
-
-
 @p 143
 Body_Slam
 Iron_Defense
 Iron_Head
 Earthquake
-
 @p 149
 Dragon_Dance
 Dragon_Claw
