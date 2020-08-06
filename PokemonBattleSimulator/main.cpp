@@ -1,6 +1,4 @@
 #include <iostream>
-#include "Bot.h"
-#include "Battlefield.h"
 #include "GameLauncher.h"
 #include <ctime>
 #include <cstdlib>

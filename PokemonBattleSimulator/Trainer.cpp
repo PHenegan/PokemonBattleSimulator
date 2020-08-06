@@ -19,6 +19,13 @@ string Trainer::getName() const
 {
 	return m_name;
 }
+
+//returns the size of the trainer's party
+int Trainer::partySize() const
+{
+	return m_party.size();
+}
+
 //Gets the trainer's party
 Party Trainer::getParty() const
 {

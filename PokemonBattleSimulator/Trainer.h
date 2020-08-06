@@ -16,6 +16,7 @@ public:
 
 	std::string getName() const;
 	Party getParty() const;
+	int partySize() const;
 	Pokemon* getCurrentPokemon() const;
 	bool canFight() const;
 	

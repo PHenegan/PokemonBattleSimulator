@@ -175,9 +175,7 @@ void Pokemon::addStatMod(pkmn::Stat s, int value)
 void Pokemon::clearStatMods()
 {
 	for (int i = 0; i < pkmn::NUM_STATS; i++)
-	{
 		m_statModifiers[i] = 0;
-	}
 }
 
 //returns how much HP the Pokemon currently has
@@ -250,6 +248,7 @@ bool Pokemon::hasType(pkmn::Type t) const
 			result = true;
 			break;
 		}
+
 	return result;
 }
 
@@ -293,7 +292,6 @@ void Pokemon::fillSpecies(ifstream &file)
 			//processes stats line
 			getline(file, temp); 
 			fillStats(temp);
-
 		}
 	}
 	if (!found)

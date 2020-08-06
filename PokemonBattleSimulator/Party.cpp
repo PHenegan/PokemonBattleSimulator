@@ -111,6 +111,6 @@ void Party::display() const
 {
 	for (int i = 0; i < m_size; i++)
 	{
-		cout << "{" << i + 1 << "} : "; m_partyArray[i].display();
+		cout << "(" << i + 1 << ") : "; m_partyArray[i].display();
 	}
 }

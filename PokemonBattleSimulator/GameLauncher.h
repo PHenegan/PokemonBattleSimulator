@@ -31,10 +31,16 @@ public:
 
 	void loadSave(std::string name);
 	void writeSave();
-	void wildEncounter();
-	
-	Pokemon getEncounter();
 	Move getMove(std::string name);
 
+
+
+	void menu();
+	void wildEncounter();
 	void randomTrainerBattle();
+
+	Pokemon getEncounter();
+	
+
+	
 };

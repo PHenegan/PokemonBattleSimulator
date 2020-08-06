@@ -51,7 +51,6 @@ void GameLauncher::fillDex()
 			lineStream >> dexNum;
 			m_dexList.push_back(dexNum);
 		}
-			
 	}
 }
 
@@ -61,7 +60,7 @@ void GameLauncher::launch()
 	string name;
 
 	bool isGood;
-	bool newSave;
+	bool newSave = false;
 
 	//prompts the user to enter their name
 	do
@@ -89,8 +88,10 @@ void GameLauncher::launch()
 	{
 		this->loadSave(name);
 	}
-	m_player->getCurrentPokemon()->display();
-	m_player->getCurrentPokemon()->displayMoves();
+	if (newSave)
+		this->newTrainer(name);
+
+	this->menu();
 }
 
 //initializes the trainer with a new file
@@ -180,6 +181,56 @@ void GameLauncher::loadSave(string name)
 	}
 }
 
+void GameLauncher::writeSave()
+{
+	m_saveFile.close();
+	ofstream out("trainers\\" + m_player->getName() + ".txt");
+
+
+}
+
+void GameLauncher::menu()
+{
+	bool exit = false;
+	do
+	{
+		int choice;
+
+		cout << endl << endl
+			<< "o=============Menu=============o" << endl
+			<< "| [1] : Battle a trainer       |" << endl
+			<< "| [2] : Find a wild Pokemon    |" << endl
+			<< "| [3] : View Trainer info      |" << endl
+			<< "| [4] : Save and Exit the game |" << endl
+			<< "o==============================o" << endl;
+		cout << "\nWhat would you like to do? : "; cin >> choice;
+
+		switch (choice)
+		{
+		case 1:
+			if (m_player->partySize() > 0)
+				wildEncounter();
+			else
+				cout << "You don't have any Pokemon! catch some in the wild first." << endl;
+			break;
+		case 2:
+			wildEncounter();
+			break;
+		case 3:
+			//display trainer info
+			break;
+		case 4:
+			exit = true;
+			break;
+		default:
+			cout << "That was not a valid input. Please enter one of the above numbers" << endl;
+		}
+
+	} while (!exit);
+
+	//this->writeSave();
+}
+
 //The trainer encounters a random encounter and is prompted to decide whether or not they should catch it
 void GameLauncher::wildEncounter() 
 {
@@ -188,58 +239,7 @@ void GameLauncher::wildEncounter()
 	p.display();
 	p.displayMoves();
 
-
 	cout << "Catch it? (Y/n): ";
-}
-
-//gets a random Pokemon with randomized EVs/IVs, a randomized level, and a randomized moveset
-Pokemon GameLauncher::getEncounter()
-{
-	//gets the Pokemon species and creates the Pokemon
-	int random = 0; //rand() % m_dexList.size();
-	
-	Pokemon p(m_dexList[random]);
-
-	//randomizes stats and sets them to the pokemon
-	int level = rand() % 16 + 85;
-	for (Stat s = HP; s <= SPEED; s = static_cast<Stat>(s + 1))
-	{
-		p.setEV(s, rand() % 253);
-		p.setIV(s, rand() % 32);
-	}
-	p.setLevel(level);
-	p.fillSpecies(m_pokemonList);
-
-	//Gets movepool by looking through the pokemon's file
-	vector<string> moveList;
-	bool foundTarget = false;
-	while (!m_pokemonMovepool.eof())
-	{
-		string line;
-		getline(m_pokemonMovepool, line);
-		//Once the next pokemon is reached, breaks
-		if (line.substr(0, 2) == "@p" && foundTarget)
-			break;
-		//If the target is found, starts reading move names
-		else if (line.substr(0, 2) == "@p")
-			foundTarget = true;
-		else if (foundTarget)
-			moveList.push_back(line);
-	}
-
-	//Finds gets a random move from the movepool, adds it to the pokemon, and removes the move from the list
-	//this prevents a move from getting picked twice
-	for (int i = 0; i < MAX_MOVES && moveList.size() != 0; i++)
-	{
-		random = rand() % moveList.size();
-		Move m = getMove(moveList[random]);
-		p.addMove(m);
-
-		vector<string>::iterator position = moveList.begin() + random;
-		moveList.erase(position);
-	}
-
-	return p;
 }
 
 //Gets Move of specified name
@@ -250,16 +250,15 @@ Move GameLauncher::getMove(string name)
 	m_moveData.clear();
 
 	Move m(name);
-
+	bool found = false;
 	string line;
-	while (getline(m_moveData, line))
+	while (getline(m_moveData, line) && !found)
 	{
 		int num;
 		string word;
 		istringstream lineStream(line);
 		lineStream >> word;
 
-		bool found = false;
 		//If the move's data has been found, writes it into the move's members
 		if (word == name)
 		{
@@ -286,10 +285,62 @@ Move GameLauncher::getMove(string name)
 				lineStream >> num;
 				m.setTargetChanges(i, num);
 			}
-			//if the move has been found, there is no need to keep going through the loop
-			break;
 		}
 	}
 
 	return m;
+}
+
+//gets a random Pokemon with randomized EVs/IVs, a randomized level, and a randomized moveset
+Pokemon GameLauncher::getEncounter()
+{
+	//clears the movepool file
+	m_pokemonMovepool.clear();
+	m_pokemonMovepool.seekg(0);
+
+	//gets the Pokemon species and creates the Pokemon
+	int random = 0; //rand() % m_dexList.size();
+
+	Pokemon p(m_dexList[random]);
+
+	//randomizes stats and sets them to the pokemon
+	int level = rand() % 16 + 85;
+	for (Stat s = HP; s <= SPEED; s = static_cast<Stat>(s + 1))
+	{
+		p.setEV(s, rand() % 253);
+		p.setIV(s, rand() % 32);
+	}
+	p.setLevel(level);
+	p.fillSpecies(m_pokemonList);
+
+	//Gets movepool by looking through the pokemon's file
+	vector<string> moveList;
+	bool foundTarget = false;
+	while (!m_pokemonMovepool.eof())
+	{
+		string line;
+		getline(m_pokemonMovepool, line);
+		//Once the next pokemon is reached, breaks
+		if (line.substr(0, 2) == "@p" && foundTarget)
+			break;
+		//If the target is found, starts reading move names
+		else if (line.substr(0, 2) == "@p" && to_string(p.getDexNum()) == line.substr(3))
+			foundTarget = true;
+		else if (foundTarget)
+			moveList.push_back(line);
+	}
+
+	//Finds gets a random move from the movepool, adds it to the pokemon, and removes the move from the list
+	//this prevents a move from getting picked twice
+	for (int i = 0; i < MAX_MOVES && moveList.size() != 0; i++)
+	{
+		random = rand() % moveList.size();
+		Move m = getMove(moveList[random]);
+		p.addMove(m);
+
+		vector<string>::iterator position = moveList.begin() + random;
+		moveList.erase(position);
+	}
+
+	return p;
 }
