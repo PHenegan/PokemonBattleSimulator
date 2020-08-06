@@ -15,7 +15,7 @@ Party::Party()
 Party::Party(std::initializer_list<Pokemon> list)
 {
 	if (list.size() > pkmn::MAX_PARTY || list.size() == 0)
-		throw("Error: Party size is not valid");
+		throw(string("Error: Party size is not valid"));
 
 	m_size = static_cast<int>(list.size());
 	m_partyArray = new Pokemon[m_size];
@@ -50,7 +50,7 @@ Party::~Party()
 void Party::addMember(Pokemon p)
 {
 	if (m_size >= pkmn::MAX_PARTY)
-		throw("Error: cannot add members to a party that is already full");
+		throw(string("Error: cannot add members to a party that is already full"));
 
 	//Creates a new array, fills it with the previous pokemon, then adds the new one
 	Pokemon* tempArray = new Pokemon[m_size + 1];
@@ -71,7 +71,7 @@ void Party::addMember(Pokemon p)
 void Party::replaceMember(int index, Pokemon p)
 {
 	if (index < 0 || index >= m_size)
-		throw("Party Error: index does not exist");
+		throw(string("Party Error: index does not exist"));
 
 	m_partyArray[index] = p;
 }
@@ -80,14 +80,14 @@ void Party::replaceMember(int index, Pokemon p)
 void Party::switchMembers(int index1, int index2)
 {
 	if (index1 >= m_size || index2 >= m_size || index1 < 0 || index2 < 0)
-		throw("Party Error: index does not exist");
+		throw(string("Party Error: index does not exist"));
 }
 
 //returns the member at the specified index in the party
 Pokemon Party::at(int index) const
 {
 	if (index < 0 || index >= m_size)
-		throw("Party Error: index does not exist");
+		throw(string("Party Error: index does not exist"));
 	
 	return m_partyArray[index];
 }
@@ -102,7 +102,7 @@ int Party::size() const
 Pokemon& Party::operator [] (int index) const
 {
 	if (index < 0 || index >= m_size)
-		throw("Party Error: index does not exist");
+		throw(string("Party Error: index does not exist"));
 
 	return m_partyArray[index];
 }

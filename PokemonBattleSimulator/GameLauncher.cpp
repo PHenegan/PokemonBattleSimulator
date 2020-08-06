@@ -13,7 +13,7 @@ GameLauncher::GameLauncher(string pokemonList, string movepool, string moveData)
 	m_player = nullptr;
 
 	if (this->checkFiles())
-		throw("Game Launcher error: one or more of the files provided does not exist or could not be accessed.");
+		throw(string("Game Launcher error: one or more of the files provided does not exist or could not be accessed."));
 	this->fillDex();
 }
 
@@ -69,7 +69,7 @@ void GameLauncher::launch()
 	{
 		cout << "Enter your name: ";
 		getline(cin, name);
-		m_saveFile.open("trainers\\" + name + ".txt");
+		m_saveFile.open("saves\\" + name + ".txt");
 
 		//if there is a problem, the user can either try again or create a new save
 		isGood = !m_saveFile.fail();
@@ -113,8 +113,7 @@ void GameLauncher::loadSave(string name)
 	m_saveFile.clear();
 
 	int pokeCount = 0;
-	int money; m_saveFile >> money;
-	this->m_player = new Trainer(name, money);
+	this->m_player = new Trainer(name);
 	
 	string line;
 	Pokemon currentPokemon;
@@ -179,7 +178,7 @@ void GameLauncher::loadSave(string name)
 	}
 	catch (...)
 	{
-		throw ("Save File Error: incorrect formatting after Party Member " + to_string(pokeCount));
+		throw (string("Save File Error: incorrect formatting after Party Member " + to_string(pokeCount)));
 	}
 }
 
@@ -190,14 +189,13 @@ void GameLauncher::writeSave()
 	ofstream out("trainers\\" + m_player->getName() + ".txt");
 	
 	if (out.fail())
-		throw("Error: could not write to save file");
+		throw(string("Error: could not write to save file"));
 	
 	Party p = m_player->getParty();
 
-	out << m_player->getMoney() << endl;
-	for (int i = 0; i < m_player->partySize(); i++)
+	for (int i = 0; i < p.size(); i++)
 	{
-		out << "@p " << p[i].getName() << p[i].getLevel() << endl;
+		out << "@p " << p[i].getDexNum() << " " << p[i].getLevel() << endl;
 		
 		//writes IV values to the file
 		out << "IV";
@@ -212,8 +210,8 @@ void GameLauncher::writeSave()
 		out << endl;
 
 		//Writes move names to the file
-		for (int j = 0; j < p[j].getNumMoves(); j++)
-			out << p[j].getMove(j).getName() << endl;
+		for (int j = 0; j < p[i].getNumMoves(); j++)
+			out << p[i].getMove(j).getName() << endl;
 	}
 
 }
@@ -221,17 +219,18 @@ void GameLauncher::writeSave()
 void GameLauncher::menu()
 {
 	bool exit = false;
+
+	cout << endl << endl
+		<< "o=============Menu=============o" << endl
+		<< "| [1] : Battle a trainer       |" << endl
+		<< "| [2] : Find a wild Pokemon    |" << endl
+		<< "| [3] : View Trainer info      |" << endl
+		<< "| [4] : Save and Exit the game |" << endl
+		<< "o==============================o" << endl << endl;
+
 	do
 	{
 		int choice;
-
-		cout << endl << endl
-			<< "o=============Menu=============o" << endl
-			<< "| [1] : Battle a trainer       |" << endl
-			<< "| [2] : Find a wild Pokemon    |" << endl
-			<< "| [3] : View Trainer info      |" << endl
-			<< "| [4] : Save and Exit the game |" << endl
-			<< "o==============================o" << endl;
 		cout << "\nWhat would you like to do? : "; cin >> choice;
 
 		switch (choice)
@@ -257,7 +256,7 @@ void GameLauncher::menu()
 
 	} while (!exit);
 
-	//this->writeSave();
+	this->writeSave();
 }
 
 //The trainer encounters a random encounter and is prompted to decide whether or not they should catch it
@@ -268,11 +267,19 @@ void GameLauncher::wildEncounter()
 	p.display();
 	p.displayMoves();
 
-	//cout << "Catch it? (Y/n): ";
-	cout << "You caught it!" << endl;
-	m_player->addPokemon(p);
-	m_player->getParty().display();
+	char choice;
+	cout << "Should you catch it? (y/N) "; cin >> choice;
 
+	if (choice == 'y' && m_player->partySize() < MAX_PARTY)
+	{
+		m_player->addPokemon(p);
+		cout << "You caught it!" << endl;
+	}
+	//if the user does not have space in their party, prompts them to replace one of their pokemon
+	else if (choice == 'y' && m_player->replacePokemon(p))
+		cout << "You caught it!" << endl;
+	else
+		cout << "The Pokemon got away..." << endl;
 }
 
 //Gets Move of specified name

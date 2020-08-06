@@ -7,11 +7,11 @@ class Trainer
 {
 private:
 	std::string m_name;
-	int m_money;
+protected:
 	Party m_party;
 public:
 	Trainer();
-	Trainer(std::string name, int money = 0);
+	Trainer(std::string name);
 
 	std::string getName() const;
 	Party getParty() const;
@@ -19,15 +19,12 @@ public:
 	Pokemon* getCurrentPokemon() const;
 	bool canFight() const;
 	
-	virtual int getReward() const;
 	virtual void getMoveChoice();
 	virtual void battleSwitch();
+	bool replacePokemon(Pokemon p);
 
 	void setParty(Party p);
 	void addPokemon(Pokemon p);
-
-	void addMoney(int howMuch);
-	int getMoney() const;
 
 	void heal();
 

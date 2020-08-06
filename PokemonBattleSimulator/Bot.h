@@ -9,11 +9,9 @@ private:
 public:
 
 	Bot();
-	Bot(std::string name, int reward = 500);
+	Bot(std::string name);
 
 	void getMoveChoice();
 	void battleSwitch();
-
-	int getReward();
 };
 

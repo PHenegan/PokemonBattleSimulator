@@ -218,7 +218,7 @@ Move* Pokemon::getCurrMove() const
 void Pokemon::setCurrMove(int index)
 {
 	if (index > m_moves.size() || index < 0)
-		throw("setCurrMove() Error: specified index does not exist");
+		throw(string("setCurrMove() Error: specified index does not exist"));
 	
 	m_currMove = &m_moves[index];
 }
@@ -227,7 +227,7 @@ void Pokemon::setCurrMove(int index)
 Move Pokemon::getMove(int index) const
 {
 	if (index > m_moves.size() || index < 0)
-		throw("getMove() Error: specified index does not exist");
+		throw(string("getMove() Error: specified index does not exist"));
 
 	return m_moves[index];
 }
@@ -297,7 +297,7 @@ void Pokemon::fillSpecies(ifstream &file)
 	if (!found)
 	{
 		string error = "Error: Pokemon " + to_string(getDexNum()) + " was not found";
-		throw(error.c_str());
+		throw(error);
 	}
 }
 
@@ -345,7 +345,7 @@ void Pokemon::fillStats(string s)
 	if (i < pkmn::NUM_STATS)
 	{
 		string error = "Error: Pokemon " + getName() + " did not receive enough stat values.";
-		throw(error.c_str());
+		throw(error);
 	}
 	m_currHP = m_stats[pkmn::HP];
 }

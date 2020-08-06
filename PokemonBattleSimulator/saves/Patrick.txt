@@ -1,0 +1,14 @@
+@p 6 100
+IV 31 31 31 31 31 31
+EV 252 252 252 252 252 252
+Flamethrower
+Air_Slash
+Dragon_Claw
+Dragon_Dance
+@p 3 93
+IV 5 23 11 0 17 22
+EV 107 11 108 44 230 153
+Energy_Ball
+Body_Slam
+Leaf_Storm
+Defense_Curl

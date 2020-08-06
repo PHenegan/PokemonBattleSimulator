@@ -18,7 +18,7 @@ Battlefield::Battlefield(Trainer* tr1, Trainer* tr2)
 void Battlefield::battle()
 {
 	//Any switches made in battle are reverted afterwards
-	//Because of this, they are copied at the beginning of a battle
+	//Because of this, the parties are copied at the beginning of a battle
 	Party p1 = m_tr1->getParty();
 	Party p2 = m_tr2->getParty();
 
@@ -30,10 +30,10 @@ void Battlefield::battle()
 
 	cout << **m_winner << " defeated " << **m_loser << '!' << endl;
 
-	(*m_winner)->addMoney((*m_loser)->getReward());
-
-	m_tr1->heal();
-	m_tr2->heal();
+	//Parties are reset to their previous state
+	//this also heals the pokemon because their HP gets reset to what it was before the battle
+	m_tr1->setParty(p1);
+	m_tr2->setParty(p1);
 }
 
 void Battlefield::runTurn()

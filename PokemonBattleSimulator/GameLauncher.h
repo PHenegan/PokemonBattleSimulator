@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <sstream>
-#include "Trainer.h"
+#include "Bot.h"
 
 class GameLauncher
 {

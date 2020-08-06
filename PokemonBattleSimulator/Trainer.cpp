@@ -4,14 +4,13 @@
 using namespace std;
 
 //Default constructor
-Trainer::Trainer() : m_name(""), m_party(), m_money(0)
+Trainer::Trainer() : m_name(""), m_party()
 {}
 
 //Constructor with values
-Trainer::Trainer(string name, int money /*= 0*/)
+Trainer::Trainer(string name)
 {
 	this->m_name = name;
-	this->m_money = money;
 }
 
 //returns trainer name
@@ -52,13 +51,6 @@ bool Trainer::canFight() const
 	}
 
 	return canFight;
-}
-
-//gets the reward for defeating the trainer
-int Trainer::getReward() const
-{
-	//rounded down
-	return m_money / 5;
 }
 
 //Prompts the trainer to set the Current Pokemon's current move
@@ -104,6 +96,33 @@ void Trainer::battleSwitch()
 
 }
 
+//If the trainer's team is full, gets a prompt to choose which pokemon to replace
+//returns true if a pokemon has been replaced
+bool Trainer::replacePokemon(Pokemon p)
+{
+	m_party.display();
+	int choice;
+	bool willContinue;
+
+	//prompts the user to make a choice until they enter a valid input
+	do
+	{
+		cout << "\nWhich pokemon would you like to replace? (Enter 0 to go back)";
+		cin >> choice;
+		if (choice < 0 || choice > m_party.size())
+			cout << "Please choose one of the options above." << endl;
+
+	} while (choice < 0 || choice > m_party.size());
+	
+	willContinue = static_cast<bool>(choice);
+
+	//If the trainer has chosen a pokemon to replace, replaces it with the given Pokemon
+	if (willContinue)
+		m_party.replaceMember(choice - 1, p);
+
+	return willContinue;
+}
+
 //sets the party
 void Trainer::setParty(Party p)
 {
@@ -115,21 +134,6 @@ void Trainer::addPokemon(Pokemon p)
 {
 	if (m_party.size() < pkmn::MAX_PARTY)
 		m_party.addMember(p);
-}
-
-
-//adds the specified amount to the trainer's wallet. howMuch can be negative
-void Trainer::addMoney(int howMuch)
-{
-	m_money += howMuch;
-	if (m_money < 0)
-		m_money = 0;
-}
-
-//returns the amount of money the trainer has
-int Trainer::getMoney() const
-{
-	return m_money;
 }
 
 //Heals all of the Pokemon in the trainer's party

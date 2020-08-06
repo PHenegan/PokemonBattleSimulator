@@ -4,13 +4,10 @@
 using namespace std;
 
 Bot::Bot() : Trainer()
-{
-	m_reward = 500;
-}
-Bot::Bot(string name, int reward /*= 500*/) : Trainer(name)
-{
-	m_reward = reward;
-}
+{}
+
+Bot::Bot(string name) : Trainer(name)
+{}
 
 void Bot::getMoveChoice()
 {
@@ -34,9 +31,4 @@ void Bot::battleSwitch()
 			break;
 		}
 	
-}
-
-int Bot::getReward()
-{
-	return m_reward;
 }
