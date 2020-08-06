@@ -75,14 +75,17 @@ public:
 	//Damage and Type related methods
 	bool hasType(pkmn::Type t) const;
 	double calculateDamageMod(pkmn::Type t) const;
+	
+	//fills pokemon data from a file
 	void fillSpecies(std::ifstream& file);
 	
 	void addMove(Move m);
-	void delMove(Move m);
 
 	//display methods
 	void display() const;
 	void displayMoves() const;
+
+	void heal();
 
 	//comparison operators
 	bool operator > (const Pokemon &p) const;

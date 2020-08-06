@@ -3,16 +3,18 @@
 
 using namespace std;
 
+//Default constructor
 Trainer::Trainer() : m_name(""), m_party(), m_money(0)
 {}
 
-
+//Constructor with values
 Trainer::Trainer(string name, int money /*= 0*/)
 {
 	this->m_name = name;
 	this->m_money = money;
 }
 
+//returns trainer name
 string Trainer::getName() const 
 {
 	return m_name;
@@ -72,6 +74,7 @@ void Trainer::getMoveChoice()
 
 }
 
+//prompts the trainer to switch into a different Pokemon on their team
 void Trainer::battleSwitch()
 {
 	m_party.display();
@@ -94,11 +97,13 @@ void Trainer::battleSwitch()
 
 }
 
+//sets the party
 void Trainer::setParty(Party p)
 {
 	m_party = p;
 }
 
+//Adds the specified pokemon to the trainer's team
 void Trainer::addPokemon(Pokemon p)
 {
 	if (m_party.size() < pkmn::MAX_PARTY)
@@ -114,6 +119,14 @@ void Trainer::addMoney(int howMuch)
 		m_money = 0;
 }
 
+//Heals all of the Pokemon in the trainer's party
+void Trainer::heal()
+{
+	for (int i = 0; i < m_party.size(); i++)
+		m_party[i].heal();
+}
+
+//Displays the trainer's name in a stream
 ostream& operator << (ostream& stream, const Trainer& t)
 {
 	stream << t.getName();

@@ -59,6 +59,17 @@ void Move::setType(pkmn::Type t)
 	m_type = t;
 }
 
+void Move::setType(string s)
+{
+	//iterates through the list of types until it finds the type
+	for (int i = 0; i < pkmn::NUM_TYPES; i++)
+		if (s == pkmn::TYPE_NAMES[i])
+		{
+			this->setType(static_cast<pkmn::Type>(i));
+			break;
+		}
+}
+
 //sets the maximum amount of times a move can be used by a specific pokemon in one battle
 void Move::setMaxPP(int n)
 {

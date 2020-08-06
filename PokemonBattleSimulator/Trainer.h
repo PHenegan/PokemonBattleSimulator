@@ -28,6 +28,8 @@ public:
 
 	void addMoney(int howMuch);
 
+	void heal();
+
 
 };
 

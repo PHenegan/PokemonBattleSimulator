@@ -25,49 +25,6 @@ namespace pkmn
 int main()
 {
 	srand(time(0));
-	ifstream types("type_modifiers.txt");
-	ifstream pokeList("pokemon_list.txt");
-
-	pkmn::setTypeModifiers(types);
-
-	Trainer t1("Patrick");
-	Bot bot("Kyle", 500);
-
-	Pokemon p1(637);
-	p1.setLevel(100);
-	p1.fillSpecies(pokeList);
-
-	Pokemon p2(6);
-	p2.setLevel(100);
-	p2.fillSpecies(pokeList);
-
-	Move m1("Flamethrower");
-	m1.setPower(90);
-	m1.setAccuracy(100);
-	m1.setSpecial(true);
-	m1.setMaxPP(15);
-	m1.setType(pkmn::FIRE);
-
-	Move m2("Air_Slash");
-	m2.setPower(75);
-	m2.setAccuracy(95);
-	m2.setSpecial(true);
-	m2.setMaxPP(15);
-	m2.setType(pkmn::FLYING);
-
-	p1.addMove(m1);
-	p2.addMove(m1);
-	p2.addMove(m2);
-	
-	t1.addPokemon(p1);
-	bot.addPokemon(p2);
-
-	Trainer* ptr = &bot;
-
-	ptr->getMoveChoice();
-
-	Battlefield field(&t1, &bot);
-	field.battle();
 }
 
 //reads type modifiers from a file and checks that the final array is valid

@@ -32,8 +32,8 @@ void Battlefield::battle()
 
 	(*m_winner)->addMoney((*m_loser)->getReward());
 
-	m_tr1->setParty(p1);
-	m_tr2->setParty(p2);
+	m_tr1->heal();
+	m_tr2->heal();
 }
 
 void Battlefield::runTurn()
@@ -87,11 +87,14 @@ void Battlefield::runTurn()
 	m_turn++;
 }
 
+//displays the health of each Pokemon
 void Battlefield::display() const
 {
+	cout << "\n";
 	m_tr2->getCurrentPokemon()->display();
 	cout << "\n\n";
 	m_tr1->getCurrentPokemon()->display();
+	cout << "\n";
 }
 
 void Battlefield::sortPriority(Pokemon** list, int size)

@@ -36,7 +36,10 @@ public:
 	void setName(std::string name);
 	void setPower(int n);
 	void setAccuracy(int n);
+	
 	void setType(pkmn::Type t);
+	void setType(std::string type);
+
 	void setMaxPP(int n);
 	void setSpecial(bool isSp);
 	void setPriority(int n);

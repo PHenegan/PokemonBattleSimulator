@@ -64,6 +64,7 @@ void Party::addMember(Pokemon p)
 	m_size++;
 }
 
+//Replace the party member at the specified index with the specified Pokemon
 void Party::replaceMember(int index, Pokemon p)
 {
 	if (index < 0 || index >= m_size)
@@ -71,12 +72,15 @@ void Party::replaceMember(int index, Pokemon p)
 
 	m_partyArray[index] = p;
 }
+
+//Swaps the members at the two specified indices
 void Party::switchMembers(int index1, int index2)
 {
 	if (index1 >= m_size || index2 >= m_size || index1 < 0 || index2 < 0)
 		throw("Party Error: index does not exist");
 }
 
+//returns the member at the specified index in the party
 Pokemon Party::at(int index) const
 {
 	if (index < 0 || index >= m_size)
@@ -85,11 +89,13 @@ Pokemon Party::at(int index) const
 	return m_partyArray[index];
 }
 
+//returns how many Pokemon are in the party
 int Party::size() const
 {
 	return m_size;
 }
 
+//returns a reference to the Pokemon at the specified index of the party
 Pokemon& Party::operator [] (int index) const
 {
 	if (index < 0 || index >= m_size)
@@ -98,10 +104,11 @@ Pokemon& Party::operator [] (int index) const
 	return m_partyArray[index];
 }
 
+//Displays Each member of the party
 void Party::display() const
 {
-	for (int i = 1; i <= m_size; i++)
+	for (int i = 0; i < m_size; i++)
 	{
-		cout << "{" << i << "} : "; m_partyArray[i - 1].display();
+		cout << "{" << i + 1 << "} : "; m_partyArray[i].display();
 	}
 }

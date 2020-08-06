@@ -4,6 +4,7 @@
 
 using namespace std;
 
+//initializes blank pokemon
 Pokemon::Pokemon() : m_name(""), m_currHP(0), m_level(0), m_dexNum(0), m_stats(), m_EV(), m_IV(), m_statModifiers(), m_currMove(nullptr)
 {
 	//Initializes array values to 0
@@ -16,6 +17,7 @@ Pokemon::Pokemon() : m_name(""), m_currHP(0), m_level(0), m_dexNum(0), m_stats()
 	}
 }
 
+//initializes blank Pokemon but specifies the species
 Pokemon::Pokemon(int dexNum) : m_name(""), m_currHP(0), m_level(0), m_dexNum(dexNum), m_stats(), m_EV(), m_IV(), m_statModifiers(), m_currMove(nullptr)
 {
 	for (int i = 0; i < pkmn::NUM_STATS; i++)
@@ -27,6 +29,7 @@ Pokemon::Pokemon(int dexNum) : m_name(""), m_currHP(0), m_level(0), m_dexNum(dex
 	}
 }
 
+//copy constructor
 Pokemon::Pokemon(const Pokemon& p)
 {
 	this->m_name = p.m_name;
@@ -57,6 +60,7 @@ Pokemon::Pokemon(const Pokemon& p)
 	
 }
 
+//Sets the pokemon's pokedex number
 void Pokemon::setDexNum(int dexNum)
 {
 	this->m_dexNum = dexNum;
@@ -76,6 +80,7 @@ void Pokemon::setStat(pkmn::Stat s, int value)
 
 }
 
+//Sets the Pokemon's IV value for a given stat
 void Pokemon::setIV(pkmn::Stat s, int value)
 {
 	//ensures IVs are within the proper bounds
@@ -87,6 +92,7 @@ void Pokemon::setIV(pkmn::Stat s, int value)
 	m_IV[s] = value;
 }
 
+//Sets the Pokemon's EV value for a given stat
 void Pokemon::setEV(pkmn::Stat s, int value)
 {
 	//ensures EVs are within the proper bounds
@@ -98,6 +104,7 @@ void Pokemon::setEV(pkmn::Stat s, int value)
 	m_EV[s] = value;
 }
 
+//sets the Pokemon's level
 void Pokemon::setLevel(int level)
 {
 	if (level > 100)
@@ -107,16 +114,19 @@ void Pokemon::setLevel(int level)
 	this->m_level = level;
 }
 
+//Returns the Pokemon's pokedex number
 int Pokemon::getDexNum() const
 {
 	return m_dexNum;
 }
 
+//returns the Pokemon's species name
 string Pokemon::getName() const
 {
 	return m_name;
 }
 
+//Gets the Pokemon's value for a given stat
 int Pokemon::getStat(pkmn::Stat s) const
 {
 	//this is the formula for how in-battle stat modifications are applied in the games
@@ -132,21 +142,25 @@ int Pokemon::getStat(pkmn::Stat s) const
 	return static_cast<int> (m_stats[s] * modifier);
 }
 
+//Gets the Pokemon's IV (Individual Value) for a given stat 
 int Pokemon::getIV(pkmn::Stat s) const
 {
 	return m_IV[s];
 }
 
+//Gets the pokemon's EV (Effort Value) for a given stat
 int Pokemon::getEV(pkmn::Stat s) const
 {
 	return m_EV[s];
 }
 
+//gets the Pokemon's level
 int Pokemon::getLevel() const
 {
 	return m_level;
 }
 
+//adds the specified value for a given stat to the stat Modifiers array
 void Pokemon::addStatMod(pkmn::Stat s, int value)
 {
 	m_statModifiers[s] += value;
@@ -157,6 +171,7 @@ void Pokemon::addStatMod(pkmn::Stat s, int value)
 		m_statModifiers[s] = -pkmn::STAT_DELTA;
 }
 
+//Clears all stat modifications
 void Pokemon::clearStatMods()
 {
 	for (int i = 0; i < pkmn::NUM_STATS; i++)
@@ -171,6 +186,7 @@ int Pokemon::currentHP() const
 	return m_currHP;
 }
 
+//adds HP to the Pokemon's current HP
 void Pokemon::addHP(int howMuch)
 {
 	m_currHP += howMuch;
@@ -179,6 +195,7 @@ void Pokemon::addHP(int howMuch)
 		m_currHP = m_stats[pkmn::HP];
 }
 
+//removes HP from the Pokemon's current HP
 void Pokemon::subHP(int howMuch)
 {
 	m_currHP -= howMuch;
@@ -187,13 +204,13 @@ void Pokemon::subHP(int howMuch)
 		m_currHP = 0;
 }
 
+//Returns whether or not the Pokemon's HP is above 0
 bool Pokemon::isFeinted() const
 {
 	return !(m_currHP > 0);
 }
 
-
-
+//Returns the move that the pokemon has selected
 Move* Pokemon::getCurrMove() const
 {
 	return m_currMove;
@@ -217,11 +234,13 @@ Move Pokemon::getMove(int index) const
 	return m_moves[index];
 }
 
+//returns the number of moves the Pokemon has
 int Pokemon::getNumMoves() const
 {
 	return static_cast<int>(m_moves.size());
 }
 
+//returns whether or not the pokemon has a specified type
 bool Pokemon::hasType(pkmn::Type t) const
 {
 	bool result = false;
@@ -244,6 +263,7 @@ double Pokemon::calculateDamageMod(pkmn::Type t) const
 	return mod;
 }
 
+//Fills pokemon data from a file
 void Pokemon::fillSpecies(ifstream &file)
 {
 	file.clear();
@@ -283,6 +303,7 @@ void Pokemon::fillSpecies(ifstream &file)
 	}
 }
 
+//Fills pokemon types from an inputted string
 void Pokemon::fillTypes(string s)
 {
 	istringstream line(s);
@@ -309,6 +330,7 @@ void Pokemon::fillTypes(string s)
 	}
 }
 
+//Fills pokemon stats from an inputted string
 void Pokemon::fillStats(string s)
 {
 	pkmn::Stat i = pkmn::HP;
@@ -330,6 +352,7 @@ void Pokemon::fillStats(string s)
 	m_currHP = m_stats[pkmn::HP];
 }
 
+//Adds specified move to move list
 void Pokemon::addMove(Move m)
 {
 	if (static_cast<int>(m_moves.size()) < pkmn::MAX_MOVES)
@@ -352,32 +375,47 @@ void Pokemon::display() const
 	cout << endl;
 }
 
+//Outputs all of the Pokemon's moves
 void Pokemon::displayMoves() const
 {
 	for (int i = 0; i < m_moves.size(); i++)
 		cout << "[" << i + 1 << "] : " << m_moves[i].display() << endl;
 }
 
+//Heals the pokemon by restoring its HP and moves
+void Pokemon::heal()
+{
+	m_currHP = m_stats[pkmn::HP];
+
+	for (int i = 0; i < static_cast<int>(m_moves.size()); i++)
+		m_moves[i].heal();
+}
+
+//Compares speed of Pokemon
 bool Pokemon::operator > (const Pokemon& p) const
 {
 	return m_stats[pkmn::SPEED] > p.getStat(pkmn::SPEED);
 }
 
+//Compares speed of Pokemon
 bool Pokemon::operator < (const Pokemon& p) const
 {
 	return p > *this;
 }
 
+//Compares speed of Pokemon
 bool Pokemon::operator == (const Pokemon& p) const
 {
 	return !(*this > p || *this < p);
 }
 
+//Adds HP to Pokemon
 void Pokemon::operator += (int n)
 {
 	this->addHP(n);
 }
 
+//Subtracts HP from Pokemon
 void Pokemon::operator -= (int n)
 {
 	this->subHP(n);
