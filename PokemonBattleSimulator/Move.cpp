@@ -229,7 +229,7 @@ string Move::display() const
 			fName += m_name.at(i);
 	}
 
-	formatted << fName << " (" << m_PP << "/ " << m_maxPP << " PP)";
+	formatted << "[" << pkmn::TYPE_NAMES[m_type] << "]" << fName << " (" << m_PP << "/ " << m_maxPP << " PP)";
 	return formatted.str();
 }
 
