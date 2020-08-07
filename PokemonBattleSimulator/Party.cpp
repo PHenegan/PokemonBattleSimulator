@@ -81,6 +81,13 @@ void Party::switchMembers(int index1, int index2)
 {
 	if (index1 >= m_size || index2 >= m_size || index1 < 0 || index2 < 0)
 		throw(string("Party Error: index does not exist"));
+	
+	//swaps the two Pokemon
+	Pokemon temp = m_partyArray[index1];
+	m_partyArray[index1] = m_partyArray[index2];
+	m_partyArray[index2] = temp;
+
+
 }
 
 //returns the member at the specified index in the party

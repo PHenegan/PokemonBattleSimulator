@@ -15,6 +15,7 @@ Fire_Blast
 Thunder_Punch
 Flame_Charge
 Brick_Break
+Mystical_Fire
 @p 9
 Aqua_Tail
 Earthquake
@@ -71,6 +72,7 @@ Smart_Strike
 @p 378
 Ice_Beam
 Icy_Wind
+Ice_Punch
 Thunderbolt
 Earthquake
 Hammer_Arm
@@ -111,3 +113,20 @@ Crush_Claw
 Flamethrower
 Fire_Blast
 Flame_Charge
+Bug_Buzz
+Quiver_Dance
+Psychic
+Mystical_Fire
+@p 784
+Brick_Break
+Bulk_Up
+Dragon_Claw
+Iron_Defense
+Thunder_Punch
+Fire_Punch
+Rock_Slide
+Breaking_Swipe
+Dragon_Dance
+Earthquake
+Superpower
+Iron_Head

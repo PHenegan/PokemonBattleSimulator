@@ -25,7 +25,7 @@ int main()
 	setTypeModifiers(typeMods);
 	try
 	{
-		GameLauncher game("pokemon_list.txt", "pokemon_movepool.txt", "move_data.txt");
+		GameLauncher game("pokemon_list.txt", "pokemon_movepool.txt", "move_data.txt", "name_list.txt");
 		game.launch();
 	}
 	catch (string error)

@@ -4,11 +4,12 @@ using namespace std;
 using namespace pkmn;
 
 //the strings are the names of the files that will be loaded
-GameLauncher::GameLauncher(string pokemonList, string movepool, string moveData)
+GameLauncher::GameLauncher(string pokemonList, string movepool, string moveData, string trainerNames)
 {
 	m_pokemonList.open(pokemonList);
 	m_pokemonMovepool.open(movepool);
 	m_moveData.open(moveData);
+	m_trainerNames.open(trainerNames);
 
 	m_player = nullptr;
 
@@ -31,7 +32,7 @@ GameLauncher::~GameLauncher()
 //returns true if a file has failed
 bool GameLauncher::checkFiles() const
 {
-	return (m_pokemonList.fail() || m_pokemonMovepool.fail() || m_moveData.fail());
+	return (m_pokemonList.fail() || m_pokemonMovepool.fail() || m_moveData.fail() || m_trainerNames.fail());
 }
 
 //fills the pokedex with the numbers of available pokemon
@@ -186,7 +187,7 @@ void GameLauncher::loadSave(string name)
 void GameLauncher::writeSave()
 {
 	m_saveFile.close();
-	ofstream out("trainers\\" + m_player->getName() + ".txt");
+	ofstream out("saves\\" + m_player->getName() + ".txt");
 	
 	if (out.fail())
 		throw(string("Error: could not write to save file"));
@@ -216,28 +217,31 @@ void GameLauncher::writeSave()
 
 }
 
+//The menu where the player can choose what to do
 void GameLauncher::menu()
 {
 	bool exit = false;
 
-	cout << endl << endl
-		<< "o=============Menu=============o" << endl
-		<< "| [1] : Battle a trainer       |" << endl
-		<< "| [2] : Find a wild Pokemon    |" << endl
-		<< "| [3] : View Trainer info      |" << endl
-		<< "| [4] : Save and Exit the game |" << endl
-		<< "o==============================o" << endl << endl;
-
 	do
 	{
 		int choice;
-		cout << "\nWhat would you like to do? : "; cin >> choice;
 
+		cout << endl << endl
+			<< "o=============Menu=============o" << endl
+			<< "| [1] : Battle a trainer       |" << endl
+			<< "| [2] : Find a wild Pokemon    |" << endl
+			<< "| [3] : View Party             |" << endl
+			<< "| [4] : Save and Exit the game |" << endl
+			<< "o==============================o" << endl << endl
+			<< "\nWhat would you like to do? : "; 
+		cin >> choice;
+		cout << endl;
+		
 		switch (choice)
 		{
 		case 1:
 			if (m_player->partySize() > 0)
-				wildEncounter();
+				randomTrainerBattle();
 			else
 				cout << "You don't have any Pokemon! catch some in the wild first." << endl;
 			break;
@@ -245,7 +249,7 @@ void GameLauncher::menu()
 			wildEncounter();
 			break;
 		case 3:
-			//display trainer info
+			m_player->getParty().display();
 			break;
 		case 4:
 			exit = true;
@@ -262,7 +266,7 @@ void GameLauncher::menu()
 //The trainer encounters a random encounter and is prompted to decide whether or not they should catch it
 void GameLauncher::wildEncounter() 
 {
-	Pokemon p = getEncounter();
+	Pokemon p = getRandomPokemon();
 	cout << "You found a Pokemon!" << endl;
 	p.display();
 	p.displayMoves();
@@ -286,8 +290,8 @@ void GameLauncher::wildEncounter()
 Move GameLauncher::getMove(string name)
 {
 	//moves the file back to its beginning
-	m_moveData.seekg(0);
 	m_moveData.clear();
+	m_moveData.seekg(0);
 
 	Move m(name);
 	bool found = false;
@@ -331,15 +335,48 @@ Move GameLauncher::getMove(string name)
 	return m;
 }
 
+//Creates a randomized bot and has the player battle it
+void GameLauncher::randomTrainerBattle()
+{
+	int numPokemon = rand() % MAX_PARTY + 1;
+	string name = getRandomName();
+	Bot rTrainer(name);
+
+	for (int i = 0; i < numPokemon; i++)
+		rTrainer.addPokemon(getRandomPokemon());
+
+	cout << "You are challenged by Pokemon Trainer " << rTrainer << "!" << endl;
+	Battlefield field(m_player, &rTrainer);
+	field.battle();
+}
+
+//gets a random name from the list of names
+string GameLauncher::getRandomName()
+{
+	//goes back to the beginning of the file
+	m_trainerNames.clear();
+	m_trainerNames.seekg(0);
+
+	//creates a list of names
+	vector<string> nameList;
+	string temp;
+	while (getline(m_trainerNames, temp))
+		nameList.push_back(temp);
+
+	//returns a random value from the list of names
+	int randNum = rand() % nameList.size();
+	return nameList[randNum];
+}
+
 //gets a random Pokemon with randomized EVs/IVs, a randomized level, and a randomized moveset
-Pokemon GameLauncher::getEncounter()
+Pokemon GameLauncher::getRandomPokemon()
 {
 	//clears the movepool file
 	m_pokemonMovepool.clear();
 	m_pokemonMovepool.seekg(0);
 
 	//gets the Pokemon species and creates the Pokemon
-	int random = 0; //rand() % m_dexList.size();
+	int random = rand() % m_dexList.size();
 
 	Pokemon p(m_dexList[random]);
 
