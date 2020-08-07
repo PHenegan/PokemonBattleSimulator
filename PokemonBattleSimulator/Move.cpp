@@ -178,6 +178,10 @@ bool Move::use(Pokemon* user, Pokemon* target)
 	pkmn::Stat atk = m_isSpecial ? pkmn::SPATK : pkmn::SPDEF;
 	
 	double damage = 0;
+
+	//modifier based on how effective the type is on the target
+	double typeMod = target->calculateDamageMod(m_type);
+
 	//This is based on the formular for damage calculations used in pokemon games.
 	//I tried to break it up into several lines in order to make it more readable
 	if (m_power > 0 && !miss)
@@ -187,9 +191,12 @@ bool Move::use(Pokemon* user, Pokemon* target)
 
 		//Attacks will do between 85% and 100% of their potential damage based on random rolls
 		double dRoll = (static_cast<double>(rand() % 16) + 85) / 100;
-
-		//modifier based on how effective the type is on the target
-		double typeMod = target->calculateDamageMod(m_type);
+		if (typeMod > 1.0)
+			cout << "It's super-effective!" << endl;
+		else if (typeMod == 0)
+			cout << "It had no effect!" << endl;
+		else if (typeMod < 1.0)
+			cout << "It's not very effective..." << endl;
 
 		double modifier = stab * dRoll * typeMod;
 
@@ -206,7 +213,8 @@ bool Move::use(Pokemon* user, Pokemon* target)
 		for (pkmn::Stat i = pkmn::HP; i <= pkmn::SPEED; i = static_cast<pkmn::Stat>(i + 1))
 		{
 			user->addStatMod(i, m_userStatChanges[i]);
-			target->addStatMod(i, m_targetStatChanges[i]);
+			if (typeMod != 0)
+				target->addStatMod(i, m_targetStatChanges[i]);
 		}
 
 	m_PP--;

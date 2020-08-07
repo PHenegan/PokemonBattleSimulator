@@ -22,13 +22,6 @@ private:
 
 	GameLauncher();
 
-public:
-	GameLauncher(std::string pokemonList, std::string pokemonMovepool, std::string moveData, std::string trainerNames);
-	~GameLauncher();
-
-	bool checkFiles() const;
-
-	void launch();
 	void fillDex();
 
 	void newTrainer(std::string name);
@@ -36,6 +29,9 @@ public:
 	void loadSave(std::string name);
 	void writeSave();
 	Move getMove(std::string name);
+	/*Pokemon getSpecies(int dexNum);
+	void fillStats(Pokemon& p, string s);
+	void fillTypes(Pokemon& p, string s);*/
 	std::string getRandomName();
 
 	void menu();
@@ -43,7 +39,12 @@ public:
 	void randomTrainerBattle();
 
 	Pokemon getRandomPokemon();
-	
 
-	
+public:
+	GameLauncher(std::string pokemonList, std::string pokemonMovepool, std::string moveData, std::string trainerNames);
+	~GameLauncher();
+
+	bool checkFiles() const;
+
+	void launch();
 };

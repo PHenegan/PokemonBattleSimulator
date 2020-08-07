@@ -17,12 +17,6 @@ Battlefield::Battlefield(Trainer* tr1, Trainer* tr2)
 
 void Battlefield::battle()
 {
-	//Any switches made in battle are reverted afterwards
-	//Because of this, the parties are copied at the beginning of a battle
-	Party p1 = m_tr1->getParty();
-	Party p2 = m_tr2->getParty();
-
-
 	while (m_tr1->canFight() && m_tr2->canFight())
 	{
 		this->runTurn();
@@ -30,10 +24,8 @@ void Battlefield::battle()
 
 	cout << **m_winner << " defeated " << **m_loser << '!' << endl;
 
-	//Parties are reset to their previous state
-	//this also heals the pokemon because their HP gets reset to what it was before the battle
-	m_tr1->setParty(p1);
-	m_tr2->setParty(p1);
+	m_tr1->heal();
+	m_tr2->heal();
 }
 
 void Battlefield::runTurn()
@@ -56,8 +48,10 @@ void Battlefield::runTurn()
 	if (!pokemon[0]->getCurrMove()->use(pokemon[0], pokemon[1]))
 		cout << "It missed!" << endl;
 
+	cout << endl;
+
 	//If the first attack landed and didn't cause the pokemon to feint, the second pokemon uses its move
-	if (!pokemon[1]->isFeinted())
+	if (!pokemon[1]->isFainted())
 	{
 		cout << pokemon[1]->getName() << " used " << *pokemon[1]->getCurrMove() << "!" << endl;
 		if (!pokemon[1]->getCurrMove()->use(pokemon[1], pokemon[0]))
@@ -66,18 +60,23 @@ void Battlefield::runTurn()
 	
 	//If one of the pokemon feints, gets the next pokemon from the trainer
 
-	if (m_tr1->getCurrentPokemon()->isFeinted() && m_tr1->canFight())
+	if (m_tr1->getCurrentPokemon()->isFainted() && m_tr1->canFight())
+	{
+		cout << m_tr1->getCurrentPokemon()->getName() << " Fainted!" << endl;
 		m_tr1->battleSwitch();
-
+	}
 	else if (!m_tr1->canFight())
 	{
 		m_winner = &m_tr2;
 		m_loser = &m_tr2;
 	}
 
-	if (m_tr2->getCurrentPokemon()->isFeinted() && m_tr2->canFight())
+	if (m_tr2->getCurrentPokemon()->isFainted() && m_tr2->canFight())
+	{
+		cout << m_tr1->getCurrentPokemon()->getName() << " Fainted!" << endl;
 		m_tr2->battleSwitch();
-	
+	}
+
 	else if (!m_tr2->canFight())
 	{
 		m_winner = &m_tr1;

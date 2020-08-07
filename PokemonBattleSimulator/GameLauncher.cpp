@@ -121,7 +121,7 @@ void GameLauncher::loadSave(string name)
 	
 	try
 	{
-		while (getline(m_saveFile, line) && pokeCount < MAX_PARTY)
+		while (getline(m_saveFile, line) && pokeCount <= MAX_PARTY)
 		{
 
 			int num;
@@ -272,7 +272,8 @@ void GameLauncher::wildEncounter()
 	p.displayMoves();
 
 	char choice;
-	cout << "Should you catch it? (y/N) "; cin >> choice;
+	cout << "\nShould you catch it? (y/N) "; cin >> choice;
+	cout << endl;
 
 	if (choice == 'y' && m_player->partySize() < MAX_PARTY)
 	{
@@ -331,7 +332,8 @@ Move GameLauncher::getMove(string name)
 			}
 		}
 	}
-
+	if (!found)
+		throw(string("Error: Move not found."));
 	return m;
 }
 

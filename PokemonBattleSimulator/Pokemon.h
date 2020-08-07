@@ -63,7 +63,7 @@ public:
 	int currentHP() const;
 	void addHP(int howMuch);
 	void subHP(int howMuch);
-	bool isFeinted() const;
+	bool isFainted() const;
 
 	//Moves
 	Move* getCurrMove() const;

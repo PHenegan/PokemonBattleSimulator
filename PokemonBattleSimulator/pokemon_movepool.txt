@@ -89,7 +89,7 @@ Iron_Head
 Iron_Defense
 Zap_Cannon
 Swift
-@p 479 
+@p 479
 Electroweb
 Thunderbolt
 Swift

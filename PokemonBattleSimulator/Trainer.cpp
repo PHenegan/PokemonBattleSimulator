@@ -57,6 +57,7 @@ bool Trainer::canFight() const
 void Trainer::getMoveChoice()
 {
 	getCurrentPokemon()->displayMoves();
+	cout << endl;
 
 	int choice;
 	do
@@ -69,6 +70,7 @@ void Trainer::getMoveChoice()
 
 	} while (choice < 1 || choice > getCurrentPokemon()->getNumMoves());
 
+	cout << endl;
 	getCurrentPokemon()->setCurrMove(choice - 1);
 
 }
@@ -76,10 +78,12 @@ void Trainer::getMoveChoice()
 //prompts the trainer to switch into a different Pokemon on their team
 void Trainer::battleSwitch()
 {
+	cout << endl;
 	m_party.display();
 	
 	int choice;
 	bool validChoice = false;
+	cout << endl;
 	while (!validChoice)
 	{
 		cout << "Pick a Pokemon to switch into: "; cin >> choice;
@@ -87,7 +91,7 @@ void Trainer::battleSwitch()
 
 		if (choice < 1 || choice > m_party.size())
 			cout << "Please enter the number of one of the above Pokemon." << endl;
-		else if (m_party[choice].isFeinted())
+		else if (m_party[choice - 1].isFainted())
 			cout << "You cannot switch into a Pokemon that cannot Battle." << endl;
 		else
 			validChoice = true;
@@ -107,7 +111,7 @@ bool Trainer::replacePokemon(Pokemon p)
 	//prompts the user to make a choice until they enter a valid input
 	do
 	{
-		cout << "\nWhich pokemon would you like to replace? (Enter 0 to go back)";
+		cout << "\nWhich pokemon would you like to replace? (Enter 0 to go back) ";
 		cin >> choice;
 		if (choice < 0 || choice > m_party.size())
 			cout << "Please choose one of the options above." << endl;

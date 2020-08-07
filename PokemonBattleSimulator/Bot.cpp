@@ -25,7 +25,7 @@ void Bot::getMoveChoice()
 void Bot::battleSwitch()
 {
 	for (int i = 1; i < m_party.size(); i++)
-		if (!m_party[i].isFeinted())
+		if (!m_party[i].isFainted())
 		{
 			m_party.switchMembers(0, i);
 			break;

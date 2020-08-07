@@ -163,6 +163,11 @@ int Pokemon::getLevel() const
 //adds the specified value for a given stat to the stat Modifiers array
 void Pokemon::addStatMod(pkmn::Stat s, int value)
 {
+	if (value < 0)
+		cout << getName() << "'s " << pkmn::STAT_NAMES[s] << " was lowered!" << endl;
+	else if (value > 0)
+		cout << getName() << "'s " << pkmn::STAT_NAMES[s] << " was raised!" << endl;
+
 	m_statModifiers[s] += value;
 
 	if (m_statModifiers[s] > pkmn::STAT_DELTA)
@@ -203,7 +208,7 @@ void Pokemon::subHP(int howMuch)
 }
 
 //Returns whether or not the Pokemon's HP is above 0
-bool Pokemon::isFeinted() const
+bool Pokemon::isFainted() const
 {
 	return !(m_currHP > 0);
 }
@@ -324,7 +329,7 @@ void Pokemon::fillTypes(string s)
 			}
 	if (count == 0 || count > pkmn::MAX_TYPES)
 	{
-		//Structured Exception Handling here
+		throw(string("Error: Pokemon " + m_name + " cannot have more than 2 types."));
 	}
 }
 

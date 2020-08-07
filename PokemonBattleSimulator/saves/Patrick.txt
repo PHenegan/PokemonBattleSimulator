@@ -1,3 +1,10 @@
+@p 784 87
+IV 18 23 30 8 6 7
+EV 4 43 87 217 83 10
+Thunder_Punch
+Dragon_Claw
+Fire_Punch
+Dragon_Dance
 @p 6 100
 IV 31 31 31 31 31 31
 EV 252 252 252 252 252 252
@@ -5,13 +12,6 @@ Flamethrower
 Air_Slash
 Dragon_Claw
 Dragon_Dance
-@p 530 100
-IV 18 22 14 24 3 30
-EV 78 233 190 195 104 154
-Brick_Break
-Iron_Head
-Crush_Claw
-Iron_Defense
 @p 143 93
 IV 14 18 24 0 30 30
 EV 237 116 182 160 14 167
@@ -26,17 +26,17 @@ Ice_Beam
 Hydro_Pump
 Flash_Cannon
 Aqua_Jet
-@p 784 87
-IV 18 23 30 8 6 7
-EV 4 43 87 217 83 10
-Thunder_Punch
-Dragon_Claw
-Fire_Punch
-Dragon_Dance
-@p 462 95
-IV 9 17 18 14 8 24
-EV 176 120 176 243 43 241
+@p 530 100
+IV 18 22 14 24 3 30
+EV 78 233 190 195 104 154
+Brick_Break
 Iron_Head
+Crush_Claw
 Iron_Defense
+@p 462 96
+IV 31 31 31 31 31 31
+EV 252 252 252 252 252 252
 Thunderbolt
+Flash_Cannon
 Swift
+Iron_Defense
