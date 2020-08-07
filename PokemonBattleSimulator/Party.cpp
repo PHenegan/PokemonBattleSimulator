@@ -1,5 +1,4 @@
 #include "Party.h"
-#include "type.h"
 #include <iostream>
 
 using namespace std;

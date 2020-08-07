@@ -6,8 +6,6 @@
 
 class Pokemon
 {
-
-	friend class Battlefield;
 private:
 	std::vector<pkmn::Type> m_types;
 	std::vector<Move> m_moves;
@@ -32,9 +30,6 @@ private:
 	std::string m_name;
 	int m_dexNum;
 
-	void fillTypes(std::string s);
-	void fillStats(std::string s);
-
 public:
 	Pokemon();
 	Pokemon(int dexNum);
@@ -42,6 +37,7 @@ public:
 
 	//mutator methods
 	void setDexNum(int dexNum);
+	void setName(std::string s);
 	void setStat(pkmn::Stat s, int value);
 	void setIV(pkmn::Stat s, int value);
 	void setEV(pkmn::Stat s, int value);
@@ -73,11 +69,10 @@ public:
 	int getNumMoves() const;
 
 	//Damage and Type related methods
+	void addType(pkmn::Type t);
 	bool hasType(pkmn::Type t) const;
 	double calculateDamageMod(pkmn::Type t) const;
 	
-	//fills pokemon data from a file
-	void fillSpecies(std::ifstream& file);
 	
 	void addMove(Move m);
 

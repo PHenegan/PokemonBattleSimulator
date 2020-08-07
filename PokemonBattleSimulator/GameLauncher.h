@@ -29,9 +29,10 @@ private:
 	void loadSave(std::string name);
 	void writeSave();
 	Move getMove(std::string name);
-	/*Pokemon getSpecies(int dexNum);
-	void fillStats(Pokemon& p, string s);
-	void fillTypes(Pokemon& p, string s);*/
+	void fillSpecies(Pokemon& p);
+	void fillStats(Pokemon& p, std::string s);
+	void fillTypes(Pokemon& p, std::string s);
+	
 	std::string getRandomName();
 
 	void menu();

@@ -3,11 +3,7 @@
 
 class Bot : public Trainer
 {
-private:
-	int m_reward;
-
 public:
-
 	Bot();
 	Bot(std::string name);
 

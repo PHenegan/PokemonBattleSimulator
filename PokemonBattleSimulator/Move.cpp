@@ -5,17 +5,19 @@
 #include <iostream>
 
 using namespace std;
+using namespace pkmn;
+
 //default constructor
 Move::Move()
 {
 	m_name = "";
-	m_type = pkmn::NORMAL;
+	m_type = NORMAL;
 	m_power = 0;
 	m_accuracy = 100;
 	m_isSpecial = false;
 	m_priority = 0;
 	m_PP = m_maxPP;
-	for (int i = 0; i < pkmn::NUM_STATS; i++)
+	for (int i = 0; i < NUM_STATS; i++)
 	{
 		m_userStatChanges[i] = 0;
 		m_targetStatChanges[i] = 0;
@@ -26,13 +28,13 @@ Move::Move()
 Move::Move(string name)
 {
 	m_name = name;
-	m_type = pkmn::NORMAL;
+	m_type = NORMAL;
 	m_power = 0;
 	m_accuracy = 100;
 	m_isSpecial = false;
 	m_priority = 0;
 	m_PP = m_maxPP;
-	for (int i = 0; i < pkmn::NUM_STATS; i++)
+	for (int i = 0; i < NUM_STATS; i++)
 	{
 		m_userStatChanges[i] = 0;
 		m_targetStatChanges[i] = 0;
@@ -58,21 +60,9 @@ void Move::setAccuracy(int n)
 }
 
 //sets the move's type
-void Move::setType(pkmn::Type t)
+void Move::setType(Type t)
 {
 	m_type = t;
-}
-
-//sets the move's type with a string
-void Move::setType(string s)
-{
-	//iterates through the list of types until it finds the type
-	for (int i = 0; i < pkmn::NUM_TYPES; i++)
-		if (s == pkmn::TYPE_NAMES[i])
-		{
-			this->setType(static_cast<pkmn::Type>(i));
-			break;
-		}
 }
 
 //sets the maximum amount of times a move can be used by a specific pokemon in one battle
@@ -95,43 +85,43 @@ void Move::setPriority(int n)
 }
 
 //sets the changes to be made in the user's stats
-void Move::setUserChanges(int stats[pkmn::NUM_STATS])
+void Move::setUserChanges(int stats[NUM_STATS])
 {
-	for (int i = 0; i < pkmn::NUM_STATS; i++)
+	for (int i = 0; i < NUM_STATS; i++)
 	{
 		m_userStatChanges[i] = stats[i];
 	}
 }
 
 //sets the value of an individual user stat to be changed i
-void Move::setUserChanges(pkmn::Stat s, int value)
+void Move::setUserChanges(Stat s, int value)
 {
 	//ensures that the value is within the specified range
-	if (value > pkmn::STAT_DELTA)
-		value = pkmn::STAT_DELTA;
-	else if (value < -pkmn::STAT_DELTA)
-		value = -pkmn::STAT_DELTA;
+	if (value > STAT_DELTA)
+		value = STAT_DELTA;
+	else if (value < -STAT_DELTA)
+		value = -STAT_DELTA;
 
 	m_userStatChanges[s] = value;
 }
 
 //sets the changes to be made in the target's stats
-void Move::setTargetChanges(int stats[pkmn::NUM_STATS])
+void Move::setTargetChanges(int stats[NUM_STATS])
 {
-	for (int i = 0; i < pkmn::NUM_STATS; i++)
+	for (int i = 0; i < NUM_STATS; i++)
 	{
 		m_targetStatChanges[i] = stats[i];
 	}
 }
 
 //sets the value of an individual target stat to be changed
-void Move::setTargetChanges(pkmn::Stat s, int value)
+void Move::setTargetChanges(Stat s, int value)
 {
 	//ensures that the value is within the specified range
-	if (value > pkmn::STAT_DELTA)
-		value = pkmn::STAT_DELTA;
-	else if (value < -pkmn::STAT_DELTA)
-		value = -pkmn::STAT_DELTA;
+	if (value > STAT_DELTA)
+		value = STAT_DELTA;
+	else if (value < -STAT_DELTA)
+		value = -STAT_DELTA;
 
 	m_targetStatChanges[s] = value;
 }
@@ -174,8 +164,8 @@ bool Move::use(Pokemon* user, Pokemon* target)
 	bool miss = (m_accuracy == -1) ? false : (rand() % 100 + 1 > m_accuracy);
 
 	//figures out which attack stat to use
-	pkmn::Stat def = m_isSpecial ? pkmn::SPDEF : pkmn::DEF;
-	pkmn::Stat atk = m_isSpecial ? pkmn::SPATK : pkmn::SPDEF;
+	Stat def = m_isSpecial ? SPDEF : DEF;
+	Stat atk = m_isSpecial ? SPATK : SPDEF;
 	
 	double damage = 0;
 
@@ -210,7 +200,7 @@ bool Move::use(Pokemon* user, Pokemon* target)
 
 	//if the move only changes stats, this will be called
 	if (!miss)
-		for (pkmn::Stat i = pkmn::HP; i <= pkmn::SPEED; i = static_cast<pkmn::Stat>(i + 1))
+		for (Stat i = HP; i <= SPEED; i = static_cast<Stat>(i + 1))
 		{
 			user->addStatMod(i, m_userStatChanges[i]);
 			if (typeMod != 0)
@@ -237,7 +227,7 @@ string Move::display() const
 			fName += m_name.at(i);
 	}
 
-	formatted << "[" << pkmn::TYPE_NAMES[m_type] << "] " << fName << " (" << m_PP << "/ " << m_maxPP << " PP)";
+	formatted << "[" << TYPE_NAMES[m_type] << "] " << fName << " (" << m_PP << "/ " << m_maxPP << " PP)";
 	return formatted.str();
 }
 

@@ -1,4 +1,5 @@
 #include "GameLauncher.h"
+#include <cstdlib>
 
 using namespace std;
 using namespace pkmn;
@@ -134,7 +135,7 @@ void GameLauncher::loadSave(string name)
 				//If a pokemon has already been found, fills its stats and adds it to the party
 				if (pokeCount > 0)
 				{
-					currentPokemon.fillSpecies(m_pokemonList);
+					fillSpecies(currentPokemon);
 					m_player->addPokemon(currentPokemon);
 				}
 
@@ -167,19 +168,19 @@ void GameLauncher::loadSave(string name)
 		//The last Pokemon won't be added, so it is added here
 		if (pokeCount > 0 && m_player->getParty().size() < MAX_PARTY)
 		{
-			currentPokemon.fillSpecies(m_pokemonList);
+			fillSpecies(currentPokemon);
 			m_player->addPokemon(currentPokemon);
 		}
 	}
 	catch (string s)
 	{
-		string error = "Save File Error : incorrect formatting after Party Member " + to_string(pokeCount);
+		string error = "Save File Error : incorrect formatting at Party Member " + to_string(pokeCount);
 		error += "\n" + s;
 		throw error;
 	}
 	catch (...)
 	{
-		throw (string("Save File Error: incorrect formatting after Party Member " + to_string(pokeCount)));
+		throw (string("Save File Error: incorrect formatting at Party Member " + to_string(pokeCount)));
 	}
 }
 
@@ -309,7 +310,7 @@ Move GameLauncher::getMove(string name)
 		{
 			found = true;
 
-			lineStream >> word; m.setType(word);
+			lineStream >> word; m.setType(getType(word));
 			lineStream >> num; m.setPower(num);
 			lineStream >> num; m.setAccuracy(num);
 			lineStream >> num; m.setMaxPP(num);
@@ -335,6 +336,88 @@ Move GameLauncher::getMove(string name)
 	if (!found)
 		throw(string("Error: Move not found."));
 	return m;
+}
+
+//Fills pokemon data from a file
+void GameLauncher::fillSpecies(Pokemon& p)
+{
+	m_pokemonList.clear();
+	m_pokemonList.seekg(0);
+
+	string name;
+	string temp;
+	bool found = false;
+
+	while (!m_pokemonList.eof() && !found)
+	{
+		//gets the current line and puts it into a string steam
+		getline(m_pokemonList, temp);
+
+		//If the target pokemon is found, adds species data into object
+		if (temp.length() >= 4 &&
+			temp.substr(0, 2) == "@p" &&
+			temp.substr(3) == to_string(p.getDexNum()))
+		{
+			found = true;
+			getline(m_pokemonList, name);
+			p.setName(name);
+
+			//processes type line
+			getline(m_pokemonList, temp);
+			fillTypes(p, temp);
+
+			//processes stats line
+			getline(m_pokemonList, temp);
+			fillStats(p, temp);
+		}
+	}
+	if (!found)
+	{
+		string error = "Error: Pokemon " + to_string(p.getDexNum()) + " was not found";
+		throw(error);
+	}
+}
+
+//Fills pokemon types from an inputted string
+void GameLauncher::fillTypes(Pokemon& p, string s)
+{
+	istringstream line(s);
+	string temp;
+	int count = 0;
+
+	while (!line.eof())
+	{
+		line >> temp;
+		p.addType(getType(temp));
+		count++;
+	}
+
+	if (count == 0)
+		throw(string("Error: No types found for Pokemon " + p.getDexNum()));
+}
+
+//Fills pokemon stats from an inputted string
+void GameLauncher::fillStats(Pokemon& p, string s)
+{
+	pkmn::Stat i = pkmn::HP;
+	int statVal;
+	istringstream line(s);
+
+	while (i <= pkmn::SPEED && !line.eof())
+	{
+		line >> statVal;
+		p.setStat(i, statVal);
+
+		i = static_cast<pkmn::Stat>(i + 1);
+	}
+	if (i < pkmn::NUM_STATS)
+	{
+		string error = "Error: Pokemon " + p.getName() + " did not receive enough stat values.";
+		throw(error);
+	}
+
+	//sets the current HP to the HP stat that was just set
+	p.heal();
 }
 
 //Creates a randomized bot and has the player battle it
@@ -390,7 +473,7 @@ Pokemon GameLauncher::getRandomPokemon()
 		p.setIV(s, rand() % 32);
 	}
 	p.setLevel(level);
-	p.fillSpecies(m_pokemonList);
+	fillSpecies(p);
 
 	//Gets movepool by looking through the pokemon's file
 	vector<string> moveList;

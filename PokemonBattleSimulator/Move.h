@@ -1,5 +1,5 @@
 #pragma once
-#include "type.h"
+#include "pkmn.h"
 #include <string>
 #include <ostream>
 
@@ -37,7 +37,6 @@ public:
 	void setAccuracy(int n);
 	
 	void setType(pkmn::Type t);
-	void setType(std::string type);
 
 	void setMaxPP(int n);
 	void setSpecial(bool isSp);

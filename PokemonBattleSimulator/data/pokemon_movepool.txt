@@ -1,0 +1,132 @@
+@p 3
+Seed_Bomb
+Sludge_Bomb
+Earthquake
+Defense_Curl
+Energy_Ball
+Leaf_Storm
+Body_Slam
+@p 6
+Dragon_Dance
+Dragon_Claw
+Air_Slash
+Flamethrower
+Fire_Blast
+Thunder_Punch
+Flame_Charge
+Brick_Break
+Mystical_Fire
+@p 9
+Aqua_Tail
+Earthquake
+Ice_Beam
+Iron_Defense
+Aqua_Jet
+Hydro_Pump
+Flash_Cannon
+@p 143
+Body_Slam
+Iron_Defense
+Iron_Head
+Earthquake
+Charm
+Brick_Break
+@p 149
+Dragon_Dance
+Dragon_Claw
+Air_Slash
+Dragon_Pulse
+Thunderbolt
+Flamethrower
+Fire_Blast
+Breaking_Swipe
+@p 150
+Aura_Sphere
+Psystrike
+Psychic
+Shadow_Ball
+Thunderbolt
+Flamethrower
+Energy_Ball
+Nasty_Plot
+@p 248
+Earthquake
+Crunch
+Flamethrower
+Thunderbolt
+Stone_Edge
+Brick_Break
+Breaking_Swipe
+Rock_Slide
+@p 376
+Bullet_Punch
+Earthquake
+Iron_Head
+Brick_Break
+Psychic
+Shadow_Ball
+Iron_Defense
+Sludge_Bomb
+Flash_Cannon
+Smart_Strike
+@p 378
+Ice_Beam
+Icy_Wind
+Ice_Punch
+Thunderbolt
+Earthquake
+Hammer_Arm
+Iron_Head
+Superpower
+Avalanche
+Blizzard
+@p 462
+Flash_Cannon
+Thunderbolt
+Thunder
+Electroweb
+Iron_Head
+Iron_Defense
+Zap_Cannon
+Swift
+@p 479
+Electroweb
+Thunderbolt
+Swift
+Thunder
+Shadow_Ball
+Nasty_Plot
+Hyper_Voice
+Dark_Pulse
+@p 530
+Earthquake
+Iron_Head
+Brick_Break
+Swords_Dance
+Sludge_Bomb
+Iron_Defense
+Smart_Strike
+Shadow_Claw
+Rock_Slide
+Crush_Claw
+@p 637
+Flamethrower
+Fire_Blast
+Flame_Charge
+Bug_Buzz
+Quiver_Dance
+Psychic
+Mystical_Fire
+@p 784
+Brick_Break
+Bulk_Up
+Dragon_Claw
+Iron_Defense
+Thunder_Punch
+Fire_Punch
+Rock_Slide
+Breaking_Swipe
+Dragon_Dance
+Earthquake
+Superpower
+Iron_Head
