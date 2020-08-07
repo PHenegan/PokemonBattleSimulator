@@ -1,3 +1,9 @@
+/*
+Patrick Henegan
+Pokemon Battle Simulator
+Last modified 8/6/2020
+*/
+
 #include <iostream>
 #include "GameLauncher.h"
 #include <ctime>
@@ -10,7 +16,7 @@ int main()
 {
 	srand(time(0));
 
-	ifstream typeMods("type_modifiers.txt");
+	ifstream typeMods("data\\type_modifiers.txt");
 	setTypeModifiers(typeMods);
 	try
 	{
