@@ -1,0 +1,7 @@
+@p 462 99
+IV 26 22 21 19 13 16
+EV 60 241 129 246 65 112
+Swift
+Thunder
+Zap_Cannon
+Flash_Cannon
