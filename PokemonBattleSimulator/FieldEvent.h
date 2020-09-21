@@ -2,7 +2,7 @@
 class FieldEvent
 {
 
-	virtual int onRun();
+	virtual bool onRun();
 
 };
 
