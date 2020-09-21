@@ -13,60 +13,84 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Pokemon">
+      <UniqueIdentifier>{24096a92-ab58-4ac5-894b-ad210f6536b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Trainer">
+      <UniqueIdentifier>{f6a5d440-3e06-4878-9aa9-3e8e88e6484e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Field">
+      <UniqueIdentifier>{d9b269c9-b40e-47e1-90ca-56f1679b9389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Field">
+      <UniqueIdentifier>{78c5e0de-48da-43c4-8c0d-2e16aa9658b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Pokemon">
+      <UniqueIdentifier>{21de6511-7ac2-4cfc-85a8-5ffe2bb869c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Trainer">
+      <UniqueIdentifier>{d00be8cb-8ff0-4b1a-958e-136b3f0c2acb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Field\Events">
+      <UniqueIdentifier>{ecccae48-6ffb-438f-8a41-e9b75879c3a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Move.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Trainer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Party.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Battlefield.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameLauncher.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Bot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pkmn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Pokemon.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="Party.cpp">
+      <Filter>Source Files\Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="Move.cpp">
+      <Filter>Source Files\Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="Bot.cpp">
+      <Filter>Source Files\Trainer</Filter>
+    </ClCompile>
+    <ClCompile Include="Trainer.cpp">
+      <Filter>Source Files\Trainer</Filter>
+    </ClCompile>
+    <ClCompile Include="Battlefield.cpp">
+      <Filter>Source Files\Field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Pokemon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Move.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Battlefield.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Trainer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Party.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameLauncher.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pkmn.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Battlefield.h">
+      <Filter>Header Files\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="Party.h">
+      <Filter>Header Files\Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="Move.h">
+      <Filter>Header Files\Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="Pokemon.h">
+      <Filter>Header Files\Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="Trainer.h">
+      <Filter>Header Files\Trainer</Filter>
+    </ClInclude>
+    <ClInclude Include="Bot.h">
+      <Filter>Header Files\Trainer</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldEvent.h">
+      <Filter>Header Files\Field</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

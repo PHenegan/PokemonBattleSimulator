@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="Battlefield.h" />
     <ClInclude Include="Bot.h" />
+    <ClInclude Include="FieldEvent.h" />
     <ClInclude Include="GameLauncher.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="Party.h" />
