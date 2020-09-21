@@ -7,7 +7,7 @@ using namespace std;
 Party::Party()
 {
 	m_size = 0;
-	m_partyArray = new Pokemon[m_size];
+	m_partyArray = nullptr;
 }
 
 //initializer list constructor
@@ -31,7 +31,8 @@ Party::Party(std::initializer_list<Pokemon> list)
 Party::Party(const Party& p)
 {
 	this->m_size = p.size();
-	m_partyArray = new Pokemon[m_size];
+	m_partyArray = m_size > 0 ? new Pokemon[m_size] : nullptr;
+
 	for (int i = 0; i < m_size; i++)
 	{
 		m_partyArray[i] = p.at(i);

@@ -80,6 +80,8 @@ void Pokemon::addType(Type t)
 	{
 		throw(string("Error: Pokemon " + to_string(m_dexNum) + " cannot have more than 2 types."));
 	}
+	m_types.push_back(t);
+
 }
 
 //sets the Pokemon's stat value when given a base stat value
