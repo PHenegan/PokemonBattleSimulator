@@ -69,6 +69,9 @@
     <ClCompile Include="HealEvent.cpp">
       <Filter>Source Files\Field\Events</Filter>
     </ClCompile>
+    <ClCompile Include="DamageEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameLauncher.h">
@@ -100,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="HealEvent.h">
       <Filter>Header Files\Field\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageEvent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

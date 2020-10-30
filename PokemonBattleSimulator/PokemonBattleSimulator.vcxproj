@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Battlefield.cpp" />
     <ClCompile Include="Bot.cpp" />
+    <ClCompile Include="DamageEvent.cpp" />
     <ClCompile Include="GameLauncher.cpp" />
     <ClCompile Include="HealEvent.cpp" />
     <ClCompile Include="main.cpp" />
@@ -153,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="Battlefield.h" />
     <ClInclude Include="Bot.h" />
+    <ClInclude Include="DamageEvent.h" />
     <ClInclude Include="FieldEvent.h" />
     <ClInclude Include="GameLauncher.h" />
     <ClInclude Include="HealEvent.h" />
