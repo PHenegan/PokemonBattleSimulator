@@ -2,7 +2,8 @@
 class FieldEvent
 {
 
-	virtual bool onRun();
+public:
+	virtual bool run();
 
 };
 

@@ -142,6 +142,7 @@
     <ClCompile Include="Battlefield.cpp" />
     <ClCompile Include="Bot.cpp" />
     <ClCompile Include="GameLauncher.cpp" />
+    <ClCompile Include="HealEvent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Move.cpp" />
     <ClCompile Include="Party.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Bot.h" />
     <ClInclude Include="FieldEvent.h" />
     <ClInclude Include="GameLauncher.h" />
+    <ClInclude Include="HealEvent.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="Party.h" />
     <ClInclude Include="Trainer.h" />

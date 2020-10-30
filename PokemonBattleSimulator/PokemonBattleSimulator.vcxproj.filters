@@ -34,6 +34,9 @@
     <Filter Include="Source Files\Field\Events">
       <UniqueIdentifier>{ecccae48-6ffb-438f-8a41-e9b75879c3a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Field\Events">
+      <UniqueIdentifier>{d48b4fa3-bcfb-4160-af7d-c72f5fab7931}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,6 +66,9 @@
     <ClCompile Include="Battlefield.cpp">
       <Filter>Source Files\Field</Filter>
     </ClCompile>
+    <ClCompile Include="HealEvent.cpp">
+      <Filter>Source Files\Field\Events</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameLauncher.h">
@@ -91,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="FieldEvent.h">
       <Filter>Header Files\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="HealEvent.h">
+      <Filter>Header Files\Field\Events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
